@@ -44,7 +44,7 @@ public class RelatorioAgrupamentoCursoFuncController extends HttpServlet {
             try{
                 HashMap parametros = new HashMap();
                 //parametros.put ("PAR_CURSO", Integer.parseInt(request.getParameter("optFuncionario")));
-                String relatorio = getServletContext().getRealPath("/WEB-INF")+"/RelatorioAgrupamentoFuncionarioCurso.jasper";
+                String relatorio = getServletContext().getRealPath("/WEB-INF")+"/RelatorioAgrupamentoFuncCurso.jasper";
                 JasperPrint jp = JasperFillManager.fillReport(relatorio, parametros, conexao);
                 byte[] relat = JasperExportManager.exportReportToPdf(jp);
                 response.setHeader("Content-Disposition", "attachment;filename=RelatorioAgrupamentoFuncionarioCurso.pdf");

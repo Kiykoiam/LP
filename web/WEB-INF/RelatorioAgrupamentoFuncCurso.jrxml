@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1ff78e6-a41f-4873-acb3-da16a523aa8a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     curso.`codCurso` AS curso_codCurso,
+     curso.`nome` AS curso_nome,
+     curso.`cargaHoraria` AS curso_cargaHoraria,
+     curso.`tipoCurso` AS curso_tipoCurso,
+     curso.`totalPeriodos` AS curso_totalPeriodos,
+     curso.`FUNCIONARIO_ID` AS curso_FUNCIONARIO_ID,
+     funcionario.`codFuncionario` AS funcionario_codFuncionario,
+     funcionario.`nome` AS funcionario_nome,
+     funcionario.`telefone` AS funcionario_telefone,
+     funcionario.`rg` AS funcionario_rg,
+     funcionario.`cpf` AS funcionario_cpf,
+     funcionario.`cidade` AS funcionario_cidade,
+     funcionario.`sexo` AS funcionario_sexo,
+     funcionario.`rua` AS funcionario_rua,
+     funcionario.`numero` AS funcionario_numero,
+     funcionario.`bairro` AS funcionario_bairro,
+     funcionario.`cep` AS funcionario_cep,
+     funcionario.`uf` AS funcionario_uf,
+     funcionario.`email` AS funcionario_email,
+     funcionario.`celular` AS funcionario_celular
+FROM
+     `funcionario` funcionario INNER JOIN `curso` curso ON funcionario.`codFuncionario` = curso.`FUNCIONARIO_ID`
+order by funcionario.`codFuncionario`]]>
+	</queryString>
+	<field name="curso_codCurso" class="java.lang.Integer"/>
+	<field name="curso_nome" class="java.lang.String"/>
+	<field name="curso_cargaHoraria" class="java.lang.Integer"/>
+	<field name="curso_tipoCurso" class="java.lang.String"/>
+	<field name="curso_totalPeriodos" class="java.lang.Integer"/>
+	<field name="curso_FUNCIONARIO_ID" class="java.lang.Integer"/>
+	<field name="funcionario_codFuncionario" class="java.lang.Integer"/>
+	<field name="funcionario_nome" class="java.lang.String"/>
+	<field name="funcionario_telefone" class="java.lang.String"/>
+	<field name="funcionario_rg" class="java.lang.String"/>
+	<field name="funcionario_cpf" class="java.lang.String"/>
+	<field name="funcionario_cidade" class="java.lang.String"/>
+	<field name="funcionario_sexo" class="java.lang.String"/>
+	<field name="funcionario_rua" class="java.lang.String"/>
+	<field name="funcionario_numero" class="java.lang.String"/>
+	<field name="funcionario_bairro" class="java.lang.String"/>
+	<field name="funcionario_cep" class="java.lang.String"/>
+	<field name="funcionario_uf" class="java.lang.String"/>
+	<field name="funcionario_email" class="java.lang.String"/>
+	<field name="funcionario_celular" class="java.lang.String"/>
+	<group name="funcionario_nome">
+		<groupExpression><![CDATA[$F{funcionario_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="be579355-8009-49cb-b3a8-23d8b1e3469f"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nome do Curso]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="3f950b76-e36f-4e14-bf0d-c36e6344ccc5"/>
+					<textElement>
+						<font size="24" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{funcionario_nome}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="6bdcb63f-fced-4776-b7a7-18c4199b3558"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="db144205-7c0f-4ba0-add3-2f7cb07e23a6"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="6aa9a9f7-09b9-4ce0-a8a8-c8aece1cbb41"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SAE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="279" y="43" width="296" height="20" forecolor="#FFFFFF" uuid="40689fe3-93e0-4be5-a1d0-ab4ec7a8ee4d"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatorio Agrupamento Funcionario Curso]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="b2cb8e47-6bf0-42a0-9794-d788080b2a4c"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d71c19f8-f121-452e-981c-62a58e836b89"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Funcionario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="f9946972-bfa3-4d7a-b6ea-2f6ae2ad9f7b"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="555" height="20" uuid="4eb795cd-1ec9-4e0c-b611-8f5c78087522"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curso_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="6f8bbbd7-6100-41e7-8292-b06dd60e1e43"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="1c3f7d4e-6b8c-4492-8fee-d442adfe1953"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="7b33867e-e0c8-422a-a785-3f8e4f4349f5"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
