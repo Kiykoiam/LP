@@ -38,7 +38,7 @@ public class relatorioFuncionario extends HttpServlet {
                 String relatorio = getServletContext().getRealPath("/WEB-INF")+"/Relatorio Funcionario.jasper";
                 JasperPrint jp = JasperFillManager.fillReport(relatorio, parametros, conexao);
                 byte[] relat = JasperExportManager.exportReportToPdf(jp);
-                response.setHeader("Content-Disposition", "attachment;filename=relatorio.pdf");
+                response.setHeader("Content-Disposition", "attachment;filename=RelatorioFuncionario.pdf");
                 response.setContentType("application/pdf");
                 response.getOutputStream().write(relat);
             }catch (JRException ex){

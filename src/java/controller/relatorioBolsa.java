@@ -38,7 +38,7 @@ public class relatorioBolsa extends HttpServlet {
                 String relatorio = getServletContext().getRealPath("/WEB-INF")+"/Relatorio Bolsa.jasper";
                 JasperPrint jp = JasperFillManager.fillReport(relatorio, parametros, conexao);
                 byte[] relat = JasperExportManager.exportReportToPdf(jp);
-                response.setHeader("Content-Disposition", "attachment;filename=relatorioBolsa.pdf");
+                response.setHeader("Content-Disposition", "attachment;filename=RelatorioBolsa.pdf");
                 response.setContentType("application/pdf");
                 response.getOutputStream().write(relat);
             }catch (JRException ex){

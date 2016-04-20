@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatorio AlunoFuncionario" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd16de26-d977-434d-8551-fa1fcc5658a5">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f48700a5-6cef-408e-a0fb-003734f264ee">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT
+     funcionario.`codFuncionario` AS funcionario_codFuncionario,
+     funcionario.`nome` AS funcionario_nome,
+     funcionario.`telefone` AS funcionario_telefone,
+     funcionario.`rg` AS funcionario_rg,
+     funcionario.`cpf` AS funcionario_cpf,
+     funcionario.`cidade` AS funcionario_cidade,
+     funcionario.`sexo` AS funcionario_sexo,
+     funcionario.`rua` AS funcionario_rua,
+     funcionario.`numero` AS funcionario_numero,
+     funcionario.`bairro` AS funcionario_bairro,
+     funcionario.`cep` AS funcionario_cep,
+     funcionario.`uf` AS funcionario_uf,
+     funcionario.`email` AS funcionario_email,
+     funcionario.`celular` AS funcionario_celular,
      candidato.`codCandidato` AS candidato_codCandidato,
      candidato.`nome` AS candidato_nome,
      candidato.`telefone` AS candidato_telefone,
@@ -22,44 +36,31 @@
      candidato.`email` AS candidato_email,
      candidato.`anoDeIngresso` AS candidato_anoDeIngresso,
      candidato.`celular` AS candidato_celular,
-     candidato.`previsaoTermino` AS candidato_previsaoTermino,
-     funcionario.`codFuncionario` AS funcionario_codFuncionario,
-     funcionario.`nome` AS funcionario_nome,
-     funcionario.`telefone` AS funcionario_telefone,
-     funcionario.`rg` AS funcionario_rg,
-     funcionario.`cpf` AS funcionario_cpf,
-     funcionario.`cidade` AS funcionario_cidade,
-     funcionario.`sexo` AS funcionario_sexo,
-     funcionario.`rua` AS funcionario_rua,
-     funcionario.`numero` AS funcionario_numero,
-     funcionario.`bairro` AS funcionario_bairro,
-     funcionario.`cep` AS funcionario_cep,
-     funcionario.`uf` AS funcionario_uf,
-     funcionario.`email` AS funcionario_email,
-     funcionario.`celular` AS funcionario_celular
+     candidato.`previsaoTermino` AS candidato_previsaoTermino
 FROM
-     `candidato` candidato,
-     `funcionario` funcionario]]>
+     `funcionario` funcionario,
+     `candidato` candidato]]>
 	</queryString>
-	<field name="candidato_codCandidato" class="java.lang.Integer"/>
-	<field name="candidato_nome" class="java.lang.String"/>
 	<field name="funcionario_nome" class="java.lang.String"/>
+	<field name="funcionario_email" class="java.lang.String"/>
+	<field name="candidato_nome" class="java.lang.String"/>
+	<field name="candidato_email" class="java.lang.String"/>
 	<background>
 		<band/>
 	</background>
 	<title>
 		<band height="72">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="663fa0e5-027c-4e7b-abdd-92445e2e30a4"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="6a095f32-74bc-488b-bd70-b1adddbe4a48"/>
 				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="dec99a5f-d36a-45cc-814b-cf6bb0488f35"/>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="22184b8d-1272-4a28-8b39-4897514aac75"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[SAE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="10732bf4-2bea-458d-aeba-8da620796340"/>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="9d268dab-b6fd-4f6e-8cf9-7fe516507946"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
@@ -74,56 +75,70 @@ FROM
 	<columnHeader>
 		<band height="21">
 			<line>
-				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="c0aec947-2691-4f00-8dfc-627263195a5b"/>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="b77b7a8f-d315-404b-8387-015f722db5c9"/>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1520fd7c-96a4-4d4c-be3b-4e2ca3f2c0be"/>
+				<reportElement mode="Opaque" x="0" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6bc96448-9c23-448b-9538-1e43d6a653aa"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Codigo Candidato]]></text>
+				<text><![CDATA[Nome Func.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="688fa0a3-fb56-483e-9b91-38d9f7a6a51a"/>
+				<reportElement mode="Opaque" x="138" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0aabcccb-3383-4795-8bd4-2f0ebfdca25f"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nome do Candidato]]></text>
+				<text><![CDATA[Email Func.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a4d922d4-0565-44a2-961e-788f8b1f3246"/>
+				<reportElement mode="Opaque" x="276" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b9cad9cc-b54d-4341-9ff4-026a014a8f57"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nome do Funcionario]]></text>
+				<text><![CDATA[Nome Cand.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="414" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="bd6512bd-8f50-43c5-a497-99145a151973"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email Cand.]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="26f188d6-998d-40ef-bb83-4cca5382bcbb"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="27cbc6a0-a2fe-4a03-a95d-afbb2e2613b3"/>
 			</line>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="185" height="20" uuid="1da24431-a84f-41fc-a15a-bbea761bb336"/>
-				<textElement textAlignment="Center">
+				<reportElement x="0" y="0" width="138" height="20" uuid="7f4f63e7-505a-4b5a-a1d1-73f9b91ae855"/>
+				<textElement>
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{candidato_codCandidato}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{funcionario_nome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="185" y="0" width="185" height="20" uuid="024cf2cc-8083-45ef-b4fe-16f93a1741bc"/>
-				<textElement textAlignment="Center">
+				<reportElement x="138" y="0" width="138" height="20" uuid="b176cbeb-ed91-4f51-83a1-fd7a8a0b346b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcionario_email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="276" y="0" width="138" height="20" uuid="3cb28a0b-ab61-44a5-ad05-fe4a5da1e843"/>
+				<textElement>
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{candidato_nome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="370" y="0" width="185" height="20" uuid="5e6c8d75-f0b5-4d4a-aa5a-46fb9793d348"/>
-				<textElement textAlignment="Center">
+				<reportElement x="414" y="0" width="138" height="20" uuid="a590f86f-a71b-4eec-88b2-f47fb06ce3ee"/>
+				<textElement>
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{funcionario_nome}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{candidato_email}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -133,16 +148,16 @@ FROM
 	<pageFooter>
 		<band height="17">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="741951ec-8748-45a7-b05b-8a438813796a"/>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="474080a7-5d09-48cb-abfd-8615a7628e9d"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="30ae26b0-2daa-4729-b886-7d0fac17e3cd"/>
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="ba53aae7-33eb-4836-81a7-9f83964a3ed1"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="be4f34a5-cbd7-4d44-9ca2-bc940dc6dd84"/>
+				<reportElement x="0" y="4" width="100" height="13" uuid="af5b620e-c2f2-4936-acdb-5fadcd865432"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>

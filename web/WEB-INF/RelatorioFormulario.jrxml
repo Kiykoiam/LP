@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ca722274-2706-4145-a920-4ebfdb6d284e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     formulario.`codForm` AS formulario_codForm,
+     formulario.`responsavelManutencaoFamilia` AS formulario_responsavelManutencaoFamilia,
+     formulario.`qtAutomovel` AS formulario_qtAutomovel,
+     formulario.`qtTvCor` AS formulario_qtTvCor,
+     formulario.`qtMaquinaDeLavar` AS formulario_qtMaquinaDeLavar,
+     formulario.`qtGeladeira` AS formulario_qtGeladeira,
+     formulario.`qtTvCabo` AS formulario_qtTvCabo,
+     formulario.`qtPc` AS formulario_qtPc,
+     formulario.`qtInternetPaga` AS formulario_qtInternetPaga,
+     formulario.`qtEmpregadaMensalista` AS formulario_qtEmpregadaMensalista,
+     formulario.`qtEmpregadaDiarista` AS formulario_qtEmpregadaDiarista,
+     formulario.`qtBanheiros` AS formulario_qtBanheiros,
+     formulario.`qtQuartos` AS formulario_qtQuartos,
+     formulario.`ensinoFundamental` AS formulario_ensinoFundamental,
+     formulario.`ensinoMedio` AS formulario_ensinoMedio,
+     formulario.`membroFamilia` AS formulario_membroFamilia,
+     formulario.`estadoCivil` AS formulario_estadoCivil,
+     formulario.`parentesco` AS formulario_parentesco,
+     formulario.`situacaoTrab` AS formulario_situacaoTrab,
+     formulario.`ocupacao` AS formulario_ocupacao,
+     formulario.`escolaridade` AS formulario_escolaridade,
+     formulario.`rendaAluguelImovel` AS formulario_rendaAluguelImovel,
+     formulario.`pensaoPorMorte` AS formulario_pensaoPorMorte,
+     formulario.`pensaoAlimenticia` AS formulario_pensaoAlimenticia,
+     formulario.`ajudaTerceiros` AS formulario_ajudaTerceiros,
+     formulario.`beneficiosSociais` AS formulario_beneficiosSociais,
+     formulario.`rendaMensalBruta` AS formulario_rendaMensalBruta,
+     formulario.`meioDeLocomocao` AS formulario_meioDeLocomocao,
+     formulario.`atividadeAcademicas` AS formulario_atividadeAcademicas,
+     formulario.`atividadeRemunerada` AS formulario_atividadeRemunerada,
+     formulario.`condicaoDeManutencao` AS formulario_condicaoDeManutencao,
+     formulario.`mora` AS formulario_mora,
+     formulario.`vcFamilia` AS formulario_vcFamilia,
+     formulario.`resideFamilia` AS formulario_resideFamilia,
+     formulario.`imovelSituacao` AS formulario_imovelSituacao,
+     formulario.`descricaoCasa` AS formulario_descricaoCasa,
+     formulario.`aguaF` AS formulario_aguaF,
+     formulario.`luzF` AS formulario_luzF,
+     formulario.`telefoneF` AS formulario_telefoneF,
+     formulario.`condominioF` AS formulario_condominioF,
+     formulario.`mensalidadeEscolaF` AS formulario_mensalidadeEscolaF,
+     formulario.`alimentacaoF` AS formulario_alimentacaoF,
+     formulario.`saudeF` AS formulario_saudeF,
+     formulario.`transporteF` AS formulario_transporteF,
+     formulario.`iptuF` AS formulario_iptuF,
+     formulario.`aluguelF` AS formulario_aluguelF,
+     formulario.`pensaoAlimentF` AS formulario_pensaoAlimentF,
+     formulario.`outroF` AS formulario_outroF,
+     formulario.`aguaE` AS formulario_aguaE,
+     formulario.`luzE` AS formulario_luzE,
+     formulario.`telefoneE` AS formulario_telefoneE,
+     formulario.`condominioE` AS formulario_condominioE,
+     formulario.`iptuE` AS formulario_iptuE,
+     formulario.`aluguelE` AS formulario_aluguelE,
+     formulario.`CANDIDATO_codCandidato` AS formulario_CANDIDATO_codCandidato
+FROM
+     `formulario` formulario]]>
+	</queryString>
+	<field name="formulario_codForm" class="java.lang.Integer"/>
+	<field name="formulario_CANDIDATO_codCandidato" class="java.lang.Integer"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="e5fdfb9a-da9f-497d-8f2b-d8dd88684bdf"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="51545d0d-0872-4a61-bb38-9e87da27c6ef"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SAE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="88120253-11cc-46c8-9789-24355e3146a3"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatorio Formulario]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="a2c3f6f8-86e1-4c28-a7bf-8529e2e799ed"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="669f9c89-9bb8-4abc-8341-ea13f4f5c7de"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo Formulario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="277" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="cba6b0cb-c966-4485-88e6-a16685aefa85"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo Candidato]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="6282802b-c522-43ee-851f-0eb2694637d0"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="277" height="20" uuid="1610c8b3-8a03-4092-a128-038b1fc38242"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{formulario_codForm}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="277" y="0" width="277" height="20" uuid="32b0914d-22f3-4356-9bd0-d3279ceaad49"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{formulario_CANDIDATO_codCandidato}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="4403173b-964c-416e-9806-4106eddf7c96"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="73d90005-cd3b-423d-9b8a-c5c3c5b52e3a"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="21e72a00-6235-49e3-955e-eef10012e058"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
