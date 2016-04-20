@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatorio AlunoFuncionario" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd16de26-d977-434d-8551-fa1fcc5658a5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     candidato.`codCandidato` AS candidato_codCandidato,
+     candidato.`nome` AS candidato_nome,
+     candidato.`telefone` AS candidato_telefone,
+     candidato.`rg` AS candidato_rg,
+     candidato.`cpf` AS candidato_cpf,
+     candidato.`matricula` AS candidato_matricula,
+     candidato.`sexo` AS candidato_sexo,
+     candidato.`rua` AS candidato_rua,
+     candidato.`numero` AS candidato_numero,
+     candidato.`bairro` AS candidato_bairro,
+     candidato.`cep` AS candidato_cep,
+     candidato.`complemento` AS candidato_complemento,
+     candidato.`uf` AS candidato_uf,
+     candidato.`cidade` AS candidato_cidade,
+     candidato.`email` AS candidato_email,
+     candidato.`anoDeIngresso` AS candidato_anoDeIngresso,
+     candidato.`celular` AS candidato_celular,
+     candidato.`previsaoTermino` AS candidato_previsaoTermino,
+     funcionario.`codFuncionario` AS funcionario_codFuncionario,
+     funcionario.`nome` AS funcionario_nome,
+     funcionario.`telefone` AS funcionario_telefone,
+     funcionario.`rg` AS funcionario_rg,
+     funcionario.`cpf` AS funcionario_cpf,
+     funcionario.`cidade` AS funcionario_cidade,
+     funcionario.`sexo` AS funcionario_sexo,
+     funcionario.`rua` AS funcionario_rua,
+     funcionario.`numero` AS funcionario_numero,
+     funcionario.`bairro` AS funcionario_bairro,
+     funcionario.`cep` AS funcionario_cep,
+     funcionario.`uf` AS funcionario_uf,
+     funcionario.`email` AS funcionario_email,
+     funcionario.`celular` AS funcionario_celular
+FROM
+     `candidato` candidato,
+     `funcionario` funcionario]]>
+	</queryString>
+	<field name="candidato_codCandidato" class="java.lang.Integer"/>
+	<field name="candidato_nome" class="java.lang.String"/>
+	<field name="funcionario_nome" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="663fa0e5-027c-4e7b-abdd-92445e2e30a4"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="dec99a5f-d36a-45cc-814b-cf6bb0488f35"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SAE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="10732bf4-2bea-458d-aeba-8da620796340"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatorio Aluno Funcionario]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="c0aec947-2691-4f00-8dfc-627263195a5b"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1520fd7c-96a4-4d4c-be3b-4e2ca3f2c0be"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo Candidato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="688fa0a3-fb56-483e-9b91-38d9f7a6a51a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Candidato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a4d922d4-0565-44a2-961e-788f8b1f3246"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do Funcionario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="26f188d6-998d-40ef-bb83-4cca5382bcbb"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="185" height="20" uuid="1da24431-a84f-41fc-a15a-bbea761bb336"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{candidato_codCandidato}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="185" y="0" width="185" height="20" uuid="024cf2cc-8083-45ef-b4fe-16f93a1741bc"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{candidato_nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="370" y="0" width="185" height="20" uuid="5e6c8d75-f0b5-4d4a-aa5a-46fb9793d348"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcionario_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="741951ec-8748-45a7-b05b-8a438813796a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="30ae26b0-2daa-4729-b886-7d0fac17e3cd"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="be4f34a5-cbd7-4d44-9ca2-bc940dc6dd84"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
