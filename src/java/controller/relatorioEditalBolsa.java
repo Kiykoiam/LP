@@ -35,10 +35,10 @@ public class relatorioEditalBolsa extends HttpServlet {
             try{
                 HashMap parametros = new HashMap();
                 //parametros.put ("PAR_codCurso", Integer.parseInt(request.getParameter("txtCodCurso")));
-                String relatorio = getServletContext().getRealPath("/WEB-INF")+"/Relatorio Edital bolsa.jasper";
+                String relatorio = getServletContext().getRealPath("/WEB-INF")+"/RelatorioEditalBolsa.jasper";
                 JasperPrint jp = JasperFillManager.fillReport(relatorio, parametros, conexao);
                 byte[] relat = JasperExportManager.exportReportToPdf(jp);
-                response.setHeader("Content-Disposition", "attachment;filename=relatorio.pdf");
+                response.setHeader("Content-Disposition", "attachment;filename=RelatorioEditalBolsa.pdf");
                 response.setContentType("application/pdf");
                 response.getOutputStream().write(relat);
             }catch (JRException ex){
