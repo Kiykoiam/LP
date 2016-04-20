@@ -89,16 +89,16 @@
         <servlet-class>controller.relatorioFuncionarioCurso</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>relatorioCursoPar</servlet-name>
-        <servlet-class>controller.RelatorioCursoPar</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>PesquisaParametroCursoController</servlet-name>
         <servlet-class>controller.PesquisaParametroCursoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RelatorioAgrupamentoCursoFuncController</servlet-name>
         <servlet-class>controller.RelatorioAgrupamentoCursoFuncController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RelatorioCursoPar</servlet-name>
+        <servlet-class>controller.RelatorioCursoPar</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PesquisaCursoController</servlet-name>
@@ -189,16 +189,16 @@
         <url-pattern>/relatorioFuncionarioCurso</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>relatorioCursoPar</servlet-name>
-        <url-pattern>/relatorioCursoPar</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>PesquisaParametroCursoController</servlet-name>
         <url-pattern>/PesquisaParametroCursoController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RelatorioAgrupamentoCursoFuncController</servlet-name>
         <url-pattern>/RelatorioAgrupamentoCursoFuncController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RelatorioCursoPar</servlet-name>
+        <url-pattern>/RelatorioCursoPar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

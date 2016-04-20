@@ -5,22 +5,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>SAE Relatorios</title>
     </head>
     <body>
-        <table>
-            <tr> 
-                <td>Bolsa por Modalidade:
-                    <form action="RelatorioCursoPar" method="post">
-                        <select name="optFuncionario">
-                            <option value="0" <c:if test="${funcionario.codFuncionario == null}"> selected</c:if>> </option>  
-                            <c:forEach items="${funcionarios}" var="funcionario">
-                                <option value="${funcionario.codFuncionario}" <c:if test="${curso.funcionario.codFuncionario == funcionario.codFuncionario}"> selected</c:if>>${funcionario.codFuncionario}</option>  
-                            </c:forEach>                    
-                            <input type="submit" name="" value="Gerar Relatório Curso Parametro"/>
-                    </form>
-                </td>
-            </tr>
-        </table>
+        <h1>Emitir Relatório Resultado Final por Aluno</h1>
+
+        <form action="RelatorioCursoPar" method="post" name="frmRelatorioCurso" onsubmit="return validarFormulario(this)">
+            Escolha o Funcionario
+            <select name="optFuncionario">
+                
+                <c:forEach items="${funcionarios}" var="funcionario">
+                    <option value="${funcionario.codFuncionario}" <c:if test="${curso.funcionario.codFuncionario == funcionario.codFuncionario}"> selected</c:if>>${funcionario.codFuncionario}</option>  
+                </c:forEach>
+            </select>
+            <input type="submit" value="Emitir Relatório" name="btnConfirmar">            
+        </form>
     </body>
 </html>
