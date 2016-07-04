@@ -1,153 +1,84 @@
 package controller;
 
+import dao.BolsaDAO;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Bolsa;
-import modelo.Funcionario;
 
 public class ManterBolsaController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private Bolsa bolsa;
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        String acao = request.getParameter("acao");
-        if (acao.equals("prepararIncluir")) {
-            prepararIncluir(request, response);
-        } else {
-            if (acao.equals("confirmarIncluir")) {
-                confirmarIncluir(request, response);
-            } else {
-                if (acao.equals("prepararEditar")) {
-                    prepararEditar(request, response);
-                } else {
-                    if (acao.equals("confirmarEditar")) {
-                        confirmarEditar(request, response);
-                    } else {
-                        if (acao.equals("prepararExcluir")) {
-                           prepararExcluir(request, response);
-                        } else {
-                            if (acao.equals("confirmarExcluir")) {
-                                confirmarExcluir(request, response);
-                            }
-                        }
+            throws ServletException, IOException {
+            String acao = request.getParameter("acao");
+            if (acao.equals("prepararOperacao")){
+                prepararOperacao(request, response);
+            }
+           if(acao.equals("confirmarOperacao")){
+                confirmarOperacao(request, response);
+            }
+            }
+            
+            public void prepararOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+                try{
+                    String operacao = request.getParameter("operacao");
+                    request.setAttribute("operacao", operacao);                    
+                    if(!operacao.equals("Incluir")){
+                        int codBolsa = Integer.parseInt(request.getParameter("codBolsa"));
+                        bolsa = BolsaDAO.getInstance().obterBolsa(codBolsa);
+                        request.setAttribute("bolsa", bolsa);
                     }
+                    RequestDispatcher View = request.getRequestDispatcher("/cadastrarBolsa.jsp");
+                    View.forward(request, response);
+                } catch (ServletException e) {
+                    throw e;
+                } catch (IOException e) {
+                    throw new ServletException(e);
                 }
             }
-        }
-    }
-    
-    public void prepararIncluir(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Incluir");
-            request.setAttribute("funcionario", Funcionario.obterFuncionarios());
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarBolsa.jsp");
-            view.forward(request, response);
-        } catch(ServletException ex) {
-        } catch(IOException ex) {            
-        } catch(ClassNotFoundException ex){            
-        }
-    }
-    
-     public void confirmarIncluir(HttpServletRequest request, HttpServletResponse response){
-        int codBolsa = Integer.parseInt(request.getParameter("txtCodBolsa"));
-        String nome = request.getParameter("txtNomeBolsa");
-       int qtdadeVagas = Integer.parseInt(request.getParameter("txtQtdadeVagasBolsa"));
-       String descricao = request.getParameter("txtDescricaoBolsa");
-       String requisitos = request.getParameter("txtRequisitosBolsa");
-       
-       try{
-         
-       Bolsa bolsa = new Bolsa(codBolsa, nome, qtdadeVagas, descricao, requisitos);
-       bolsa.gravar();
-       RequestDispatcher view = request.getRequestDispatcher("PesquisaBolsaController");
-       view.forward(request, response);
-       }catch (IOException ex){           
-       }catch (SQLException ex){           
-       }catch (ClassNotFoundException ex){           
-       }catch (ServletException ex){           
-       }
-    }
-     
-     public void prepararEditar(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Editar");           
-            int codBolsa = Integer.parseInt(request.getParameter("codBolsa"));
-            Bolsa bolsa = Bolsa.obterBolsa(codBolsa);
-            request.setAttribute("bolsa", bolsa);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarBolsa.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-     public void confirmarEditar(HttpServletRequest request, HttpServletResponse response){
-        int codBolsa = Integer.parseInt(request.getParameter("txtCodBolsa"));
-        String nome = request.getParameter("txtNomeBolsa");
-       int qtdadeVagas = Integer.parseInt(request.getParameter("txtQtdadeVagasBolsa"));
-       String descricao = request.getParameter("txtDescricaoBolsa");
-       String requisitos = request.getParameter("txtRequisitosBolsa");
-       
-       try{
-         
-       Bolsa bolsa = new Bolsa(codBolsa, nome, qtdadeVagas, descricao, requisitos);
-       bolsa.alterar();
-       RequestDispatcher view = request.getRequestDispatcher("PesquisaBolsaController");
-       view.forward(request, response);
-       }catch (IOException ex){           
-       }catch (SQLException ex){           
-       }catch (ClassNotFoundException ex){           
-       }catch (ServletException ex){           
-       }
-    }
-     
-     // metodo para excluir
-     public void prepararExcluir(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Excluir");           
-            int codBolsa = Integer.parseInt(request.getParameter("codBolsa"));
-            Bolsa bolsa = Bolsa.obterBolsa(codBolsa);
-            request.setAttribute("bolsa", bolsa);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarBolsa.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-     
-     public void confirmarExcluir(HttpServletRequest request, HttpServletResponse response){
-        int codBolsa = Integer.parseInt(request.getParameter("txtCodBolsa"));
-        String nome = request.getParameter("txtNomeBolsa");
-       int qtdadeVagas = Integer.parseInt(request.getParameter("txtQtdadeVagasBolsa"));
-       String descricao = request.getParameter("txtDescricaoBolsa");
-       String requisitos = request.getParameter("txtRequisitosBolsa");
-       
-       try{
-         
-       Bolsa bolsa = new Bolsa(codBolsa, nome, qtdadeVagas, descricao, requisitos);
-       bolsa.excluir();
-       RequestDispatcher view = request.getRequestDispatcher("PesquisaBolsaController");
-       view.forward(request, response);
-       }catch (IOException ex){           
-       }catch (SQLException ex){           
-       }catch (ClassNotFoundException ex){           
-       }catch (ServletException ex){           
-       }
-    }
+            
+            public void confirmarOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                try{
+                    String operacao = request.getParameter("operacao");
+                    int codBolsa = Integer.parseInt(request.getParameter("txtCodBolsa"));
+                    String nome = request.getParameter("txtNomeBolsa");
+                    int qtdadeVagas = Integer.parseInt(request.getParameter("txtQtdadeVagasBolsa"));
+                    String descricao = request.getParameter("txtDescricaoBolsa");
+                    String requisitos = request.getParameter("txtRequisitosBolsa");
+
+                    if(operacao.equals("Incluir")) {
+                        bolsa = new Bolsa(codBolsa);
+                        bolsa.setNome(nome);
+                        bolsa.setQtdadeVagas(qtdadeVagas);
+                        bolsa.setDescricao(descricao);
+                        bolsa.setRequisitos(requisitos);
+                        BolsaDAO.getInstance().salvar(bolsa);                        
+                    }
+                    else if(operacao.equals("Editar")) {
+                        bolsa.setNome(nome);
+                        bolsa.setQtdadeVagas(qtdadeVagas);
+                        bolsa.setDescricao(descricao);
+                        bolsa.setRequisitos(requisitos);
+                        BolsaDAO.getInstance().editar(bolsa);
+                    }
+                    else if (operacao.equals("Excluir")) {
+                        BolsaDAO.getInstance().excluir(bolsa);
+                    }
+                    RequestDispatcher View = request.getRequestDispatcher("PesquisaBolsaController");
+                    View.forward(request, response);
+                }
+                catch (ServletException e){
+                    throw e;
+                }
+                catch (IOException e) {
+                    throw new ServletException(e);
+                }
+            }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

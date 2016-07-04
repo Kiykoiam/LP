@@ -6,6 +6,7 @@
 
 package controller;
 
+import dao.EditalDAO;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.logging.Level;
@@ -15,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Edital;
 
 /**
  *
@@ -37,7 +37,7 @@ public class PesquisaEditalController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
         
         try {
-            request.setAttribute("editais", Edital.obterEditais());
+            request.setAttribute("editais", EditalDAO.getInstance().obterEditais());
             RequestDispatcher view = request.getRequestDispatcher("/pesquisaEdital.jsp");
             view.forward(request,response);
         } finally {

@@ -5,8 +5,8 @@
  */
 package controller;
 
+import dao.FuncionarioDAO;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,150 +20,100 @@ import modelo.Funcionario;
  */
 public class ManterFuncionarioController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private Funcionario funcionario;
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String acao = request.getParameter("acao");
-        if (acao.equals("prepararIncluir")) {
-            prepararIncluir(request, response);
-        } else if (acao.equals("confirmarIncluir")) {
-            confirmarIncluir(request, response);
-        } else if (acao.equals("prepararEditar")) {
-             prepararEditar(request, response);
-        } else if (acao.equals("confirmarEditar")) {
-             confirmarEditar(request, response);
-        } else if (acao.equals("prepararExcluir")) {
-             prepararExcluir(request, response);
-        } else if (acao.equals("confirmarExcluir")) {
-             confirmarExcluir(request, response);
-        }
-    }
-
-    public void prepararIncluir(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Incluir");            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarFuncionario.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } 
-    }
-
-    public void confirmarIncluir(HttpServletRequest request, HttpServletResponse response) {
-        int codFuncionario = Integer.parseInt(request.getParameter("txtCodFuncionario"));
-        String nome = request.getParameter("txtNomeFuncionario");
-        String telefone = request.getParameter("txtTelefone");
-        String rg = request.getParameter("txtRg");
-        int cpf = Integer.parseInt(request.getParameter("txtCpf"));
-        String cidade = request.getParameter("txtCidade");
-        String sexo = request.getParameter("optSexo");
-        String rua = request.getParameter("txtRua");
-        String numero = request.getParameter("txtNumero");
-        String bairro = request.getParameter("txtBairro");
-        String cep = request.getParameter("txtCep");
-        String uf = request.getParameter("txtUf");
-        String email = request.getParameter("txtEmail");
-        int celular = Integer.parseInt(request.getParameter("txtCelular"));
-        try {
-            Funcionario funcionario = new Funcionario(codFuncionario, nome, telefone, rg, cpf, cidade, sexo, rua, numero, bairro, cep, uf, email, celular);
-            funcionario.gravar();
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaFuncionarioController");
-            view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
-        }
-    }
-    
-    public void prepararEditar(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Editar");           
-            int codFuncionario = Integer.parseInt(request.getParameter("codFuncionario"));
-            Funcionario funcionario = Funcionario.obterFuncionario(codFuncionario);
-            request.setAttribute("funcionario", funcionario);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarFuncionario.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-    
-     public void confirmarEditar(HttpServletRequest request, HttpServletResponse response) {
-        int codFuncionario = Integer.parseInt(request.getParameter("txtCodFuncionario"));
-        String nome = request.getParameter("txtNomeFuncionario");
-        String telefone = request.getParameter("txtTelefone");
-        String rg = request.getParameter("txtRg");
-        int cpf = Integer.parseInt(request.getParameter("txtCpf"));
-        String cidade = request.getParameter("txtCidade");
-        String sexo = request.getParameter("optSexo");
-        String rua = request.getParameter("txtRua");
-        String numero = request.getParameter("txtNumero");
-        String bairro = request.getParameter("txtBairro");
-        String cep = request.getParameter("txtCep");
-        String uf = request.getParameter("txtUf");
-        String email = request.getParameter("txtEmail");
-        int celular = Integer.parseInt(request.getParameter("txtCelular"));
-        try {
-            Funcionario funcionario = new Funcionario(codFuncionario, nome, telefone, rg, cpf, cidade, sexo, rua, numero, bairro, cep, uf, email, celular);
-            funcionario.alterar();
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaFuncionarioController");
-            view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
-        }
-    }
-    
-    public void prepararExcluir(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Excluir");           
-            int codFuncionario = Integer.parseInt(request.getParameter("codFuncionario"));
-            Funcionario funcionario = Funcionario.obterFuncionario(codFuncionario);
-            request.setAttribute("funcionario", funcionario);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarFuncionario.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-     public void confirmarExcluir(HttpServletRequest request, HttpServletResponse response) {
-        int codFuncionario = Integer.parseInt(request.getParameter("txtCodFuncionario"));
-        String nome = request.getParameter("txtNomeFuncionario");
-        String telefone = request.getParameter("txtTelefone");
-        String rg = request.getParameter("txtRg");
-        int cpf = Integer.parseInt(request.getParameter("txtCpf"));
-        String cidade = request.getParameter("txtCidade");
-        String sexo = request.getParameter("optSexo");
-        String rua = request.getParameter("txtRua");
-        String numero = request.getParameter("txtNumero");
-        String bairro = request.getParameter("txtBairro");
-        String cep = request.getParameter("txtCep");
-        String uf = request.getParameter("txtUf");
-        String email = request.getParameter("txtEmail");
-        int celular = Integer.parseInt(request.getParameter("txtCelular"));
-        try {
-            Funcionario funcionario = new Funcionario(codFuncionario, nome, telefone, rg, cpf, cidade, sexo, rua, numero, bairro, cep, uf, email, celular);
-            funcionario.excluir();
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaFuncionarioController");
-            view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
-        }
-    }
+            String acao = request.getParameter("acao");
+            if (acao.equals("prepararOperacao")){
+                prepararOperacao(request, response);
+            }
+           if(acao.equals("confirmarOperacao")){
+                confirmarOperacao(request, response);
+            }
+            }
+            
+            public void prepararOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+                try{
+                    String operacao = request.getParameter("operacao");
+                    request.setAttribute("operacao", operacao);                    
+                    if(!operacao.equals("Incluir")){
+                        int CodFuncionario = Integer.parseInt(request.getParameter("codFuncionario"));
+                        funcionario = FuncionarioDAO.getInstance().obterFuncionario(CodFuncionario);
+                        request.setAttribute("funcionario", funcionario);
+                    }
+                    RequestDispatcher View = request.getRequestDispatcher("/cadastrarFuncionario.jsp");
+                    View.forward(request, response);
+                } catch (ServletException e) {
+                    throw e;
+                } catch (IOException e) {
+                    throw new ServletException(e);
+                }
+            }
+            
+            public void confirmarOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+                try{
+                    String operacao = request.getParameter("operacao");
+                    int CodFuncionario = Integer.parseInt(request.getParameter("txtCodFuncionario"));
+                    String nome = request.getParameter("txtNomeFuncionario");
+                    int telefone = Integer.parseInt(request.getParameter("txtTelefone"));         
+                    String rg = request.getParameter("txtRg");
+                    int cpf = Integer.parseInt(request.getParameter("txtCpf"));
+                    String cidade = request.getParameter("txtCidade");
+                    String sexo = request.getParameter("optSexo");
+                    String rua = request.getParameter("txtRua");
+                    int numero = Integer.parseInt(request.getParameter("txtNumero"));
+                    String bairro = request.getParameter("txtBairro");
+                    int cep = Integer.parseInt(request.getParameter("txtCep"));
+                    String uf = request.getParameter("txtUf");
+                    String email = request.getParameter("txtEmail");
+                    int celular = Integer.parseInt(request.getParameter("txtCelular"));
+                    if(operacao.equals("Incluir")) {
+                        funcionario = new Funcionario(CodFuncionario);
+                        funcionario.setNome(nome);
+                        funcionario.setTelefone(telefone);
+                        funcionario.setRg(rg);
+                        funcionario.setCpf(cpf);
+                        funcionario.setCidade(cidade);
+                        funcionario.setSexo(sexo);
+                        funcionario.setRua(rua);
+                        funcionario.setNumero(numero);
+                        funcionario.setBairro(bairro);
+                        funcionario.setCep(cep);
+                        funcionario.setUf(uf);
+                        funcionario.setEmail(email);
+                        funcionario.setCelular(celular);
+                        FuncionarioDAO.getInstance().salvar(funcionario);                        
+                    }
+                    else if(operacao.equals("Editar")) {
+                        funcionario.setNome(nome);
+                        funcionario.setTelefone(telefone);
+                        funcionario.setRg(rg);
+                        funcionario.setCpf(cpf);
+                        funcionario.setCidade(cidade);
+                        funcionario.setSexo(sexo);
+                        funcionario.setRua(rua);
+                        funcionario.setNumero(numero);
+                        funcionario.setBairro(bairro);
+                        funcionario.setCep(cep);
+                        funcionario.setUf(uf);
+                        funcionario.setEmail(email);
+                        funcionario.setCelular(celular);
+                        FuncionarioDAO.getInstance().editar(funcionario);
+                    }
+                    else if (operacao.equals("Excluir")) {
+                        FuncionarioDAO.getInstance().excluir(funcionario);
+                    }
+                    RequestDispatcher View = request.getRequestDispatcher("PesquisaFuncionarioController");
+                    View.forward(request, response);
+                }
+                catch (ServletException e){
+                    throw e;
+                }
+                catch (IOException e) {
+                    throw new ServletException(e);
+                }
+            }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

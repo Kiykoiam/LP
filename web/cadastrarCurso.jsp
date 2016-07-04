@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -12,7 +12,7 @@
     </head>
     <body>		
         <h1> Cadastrar Curso ${operacao} </h1>
-        <form action="ManterCursoController?acao=confirmar${operacao}" method="post" name="frmManterCurso" onsubmit="return validarFormulario(this)">
+        <form action="ManterCursoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterCurso" onsubmit="return validarFormulario(this)">
             <table >
 
                 <tr>
@@ -47,7 +47,7 @@
                         <td>
                             <select name="optFuncionario" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>>                             
                             <c:forEach items="${funcionario}" var="funcionario">
-                                <option value="${funcionario.codFuncionario}" <c:if test="${curso.funcionario.codFuncionario == funcionario.codFuncionario}"> selected</c:if>>${funcionario.nome}</option>  
+                                <option value="${funcionario.codFuncionario}" <c:if test="${curso.funcionarioId.codFuncionario == funcionario.codFuncionario}"> selected</c:if>>${funcionario.nome}</option>  
                             </c:forEach>
                         </select>
                     </td>

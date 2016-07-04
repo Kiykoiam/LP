@@ -11,7 +11,7 @@
     </head>
     <body>		
         <h1> Cadastrar Candidato ${operacao} </h1>
-        <form action="ManterCandidatoController?acao=confirmar${operacao}" method="post" name="frmManterCandidato" onsubmit="return validarFormulario(this)">
+        <form action="ManterCandidatoController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterCandidato" onsubmit="return validarFormulario(this)">
             <table >
 
                 <tr>
@@ -41,8 +41,8 @@
                     <tr>
                         <td>Sexo</td>
                         <td> <select name="optSexo" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>>
-                            <option value="Masculino" <c:if test="${candidato.sexo == 'Técnico'}"> selected</c:if>>Masculino</option>
-                            <option value="Feminino" <c:if test="${candidato.sexo == 'Integrado'}"> selected</c:if>>Feminino</option>
+                            <option value="Masculino" <c:if test="${candidato.sexo == 'Masculino'}"> selected</c:if>>Masculino</option>
+                            <option value="Feminino" <c:if test="${candidato.sexo == 'Feminino'}"> selected</c:if>>Feminino</option>
                             </select></td>
                     </tr>
                     <tr>

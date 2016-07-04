@@ -1,27 +1,37 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-import modelo.Bolsa;
+import modelo.Grupo;
 
-public class BolsaDAO {
-    private static BolsaDAO instance = new BolsaDAO();
+/**
+ *
+ * @author Aluno
+ */
+public class GrupoDAO {
+    private static GrupoDAO instance = new GrupoDAO();
     
-    public static BolsaDAO getInstance() {
+    public static GrupoDAO getInstance() {
         return instance;
     }
     
-    private BolsaDAO(){
+    private GrupoDAO(){
     }
     
-    public void salvar (Bolsa bolsa) {
+    public void salvar (Grupo grupo) {
         EntityManager em = PersistenceUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            em.persist(bolsa);
+            em.persist(grupo);
             tx.commit();
         } catch(Exception e){
             if(tx != null && tx.isActive()){
@@ -33,12 +43,12 @@ public class BolsaDAO {
         }
     }
     
-    public void editar (Bolsa bolsa) {
+    public void editar (Grupo grupo) {
         EntityManager em = PersistenceUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            em.merge(bolsa);
+            em.merge(grupo);
             tx.commit();
         } catch(Exception e){
             if(tx != null && tx.isActive()){
@@ -50,12 +60,12 @@ public class BolsaDAO {
         }
     }
     
-    public void excluir (Bolsa bolsa){
+     public void excluir (Grupo grupo){
         EntityManager em = PersistenceUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try{
             tx.begin();
-            em.remove(em.getReference(Bolsa.class, bolsa.getCodBolsa()));
+            em.remove(em.getReference(Grupo.class, grupo.getCodGrupo()));
             tx.commit();
         }catch(Exception e){
             if(tx != null && tx.isActive()){
@@ -67,13 +77,13 @@ public class BolsaDAO {
         }
     }
     
-    public Bolsa obterBolsa(int id) {
+    public Grupo obterGrupo(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-        Bolsa bolsa = null;
+        Grupo grupo = null;
         try {
             tx.begin();
-            bolsa = em.find(Bolsa.class, id);
+            grupo = em.find(Grupo.class, id);
             tx.commit();
         } catch (Exception e) {
             if(tx != null && tx.isActive()){
@@ -82,18 +92,18 @@ public class BolsaDAO {
             throw new RuntimeException(e);
         }finally{
          PersistenceUtil.close(em);
-         return bolsa;
+         return grupo;
         }
     } 
     
-    public List<Bolsa> obterBolsas() {
+    public List<Grupo> obterGrupos() {
         EntityManager em = PersistenceUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
-        List<Bolsa> bolsas = null;
+        List<Grupo> grupos = null;
         try{
             tx.begin();
-            TypedQuery<Bolsa> query = em.createQuery("select b from Bolsa b", Bolsa.class);
-            bolsas = query.getResultList();
+            TypedQuery<Grupo> query = em.createQuery("select g from Grupo g", Grupo.class);
+            grupos = query.getResultList();
             tx.commit();
         } catch (Exception e) {
             if(tx != null && tx.isActive()){
@@ -103,6 +113,6 @@ public class BolsaDAO {
         } finally{
             PersistenceUtil.close(em);
         }
-        return bolsas;
-    }
+        return grupos;
+    }  
 }

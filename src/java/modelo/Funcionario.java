@@ -1,48 +1,110 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package modelo;
 
-import dao.FuncionarioDAO;
-import java.sql.SQLException;
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-public class Funcionario {
-
-    private int codFuncionario;
+/**
+ *
+ * @author Aluno
+ */
+@Entity
+@Table(name = "funcionario")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Funcionario.findAll", query = "SELECT f FROM Funcionario f"),
+    @NamedQuery(name = "Funcionario.findByCodFuncionario", query = "SELECT f FROM Funcionario f WHERE f.codFuncionario = :codFuncionario"),
+    @NamedQuery(name = "Funcionario.findByNome", query = "SELECT f FROM Funcionario f WHERE f.nome = :nome"),
+    @NamedQuery(name = "Funcionario.findByTelefone", query = "SELECT f FROM Funcionario f WHERE f.telefone = :telefone"),
+    @NamedQuery(name = "Funcionario.findByRg", query = "SELECT f FROM Funcionario f WHERE f.rg = :rg"),
+    @NamedQuery(name = "Funcionario.findByCpf", query = "SELECT f FROM Funcionario f WHERE f.cpf = :cpf"),
+    @NamedQuery(name = "Funcionario.findByCidade", query = "SELECT f FROM Funcionario f WHERE f.cidade = :cidade"),
+    @NamedQuery(name = "Funcionario.findBySexo", query = "SELECT f FROM Funcionario f WHERE f.sexo = :sexo"),
+    @NamedQuery(name = "Funcionario.findByRua", query = "SELECT f FROM Funcionario f WHERE f.rua = :rua"),
+    @NamedQuery(name = "Funcionario.findByNumero", query = "SELECT f FROM Funcionario f WHERE f.numero = :numero"),
+    @NamedQuery(name = "Funcionario.findByBairro", query = "SELECT f FROM Funcionario f WHERE f.bairro = :bairro"),
+    @NamedQuery(name = "Funcionario.findByCep", query = "SELECT f FROM Funcionario f WHERE f.cep = :cep"),
+    @NamedQuery(name = "Funcionario.findByUf", query = "SELECT f FROM Funcionario f WHERE f.uf = :uf"),
+    @NamedQuery(name = "Funcionario.findByEmail", query = "SELECT f FROM Funcionario f WHERE f.email = :email"),
+    @NamedQuery(name = "Funcionario.findByCelular", query = "SELECT f FROM Funcionario f WHERE f.celular = :celular")})
+public class Funcionario implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codFuncionario")
+    private Integer codFuncionario;
+    @Size(max = 45)
+    @Column(name = "nome")
     private String nome;
-    private String telefone;
+    @Column(name = "telefone")
+    private Integer telefone;
+    @Size(max = 45)
+    @Column(name = "rg")
     private String rg;
-    private int cpf;
+    @Column(name = "cpf")
+    private Integer cpf;
+    @Size(max = 45)
+    @Column(name = "cidade")
     private String cidade;
+    @Size(max = 45)
+    @Column(name = "sexo")
     private String sexo;
+    @Size(max = 45)
+    @Column(name = "rua")
     private String rua;
-    private String numero;
+    @Column(name = "numero")
+    private Integer numero;
+    @Size(max = 45)
+    @Column(name = "bairro")
     private String bairro;
-    private String cep;
+    @Column(name = "cep")
+    private Integer cep;
+    @Size(max = 45)
+    @Column(name = "uf")
     private String uf;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 45)
+    @Column(name = "email")
     private String email;
-    private int celular;
+    @Column(name = "celular")
+    private Integer celular;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionarioId")
+    private List<Curso> cursoList;
+    @OneToMany(mappedBy = "fUNCIONARIOcodFuncionario")
+    private List<Edital> editalList;
 
-    public Funcionario(int codFuncionario, String nome, String telefone, String rg, int cpf, String cidade, String sexo, String rua, String numero, String bairro, String cep, String uf, String email, int celular) {
-        this.codFuncionario = codFuncionario;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.cidade = cidade;
-        this.sexo = sexo;
-        this.rua = rua;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.uf = uf;
-        this.email = email;
-        this.celular = celular;
+    public Funcionario() {
     }
 
-    public int getCodFuncionario() {
+    public Funcionario(Integer codFuncionario) {
+        this.codFuncionario = codFuncionario;
+    }
+
+    public Integer getCodFuncionario() {
         return codFuncionario;
     }
 
-    public void setCodFuncionario(int codFuncionario) {
+    public void setCodFuncionario(Integer codFuncionario) {
         this.codFuncionario = codFuncionario;
     }
 
@@ -54,11 +116,11 @@ public class Funcionario {
         this.nome = nome;
     }
 
-    public String getTelefone() {
+    public Integer getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Integer telefone) {
         this.telefone = telefone;
     }
 
@@ -70,11 +132,11 @@ public class Funcionario {
         this.rg = rg;
     }
 
-    public int getCpf() {
+    public Integer getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(Integer cpf) {
         this.cpf = cpf;
     }
 
@@ -102,11 +164,11 @@ public class Funcionario {
         this.rua = rua;
     }
 
-    public String getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -118,11 +180,11 @@ public class Funcionario {
         this.bairro = bairro;
     }
 
-    public String getCep() {
+    public Integer getCep() {
         return cep;
     }
 
-    public void setCep(String cep) {
+    public void setCep(Integer cep) {
         this.cep = cep;
     }
 
@@ -142,29 +204,55 @@ public class Funcionario {
         this.email = email;
     }
 
-    public int getCelular() {
+    public Integer getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(Integer celular) {
         this.celular = celular;
     }
 
-    public static List<Funcionario> obterFuncionarios() throws ClassNotFoundException {
-        return FuncionarioDAO.obterFuncionarios();
+    @XmlTransient
+    public List<Curso> getCursoList() {
+        return cursoList;
     }
 
-    public static Funcionario obterFuncionario(int codFuncionario) throws ClassNotFoundException {
-        return FuncionarioDAO.obterFuncionario(codFuncionario);
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
-    public void gravar() throws SQLException, ClassNotFoundException {
-        FuncionarioDAO.gravar(this);
+    @XmlTransient
+    public List<Edital> getEditalList() {
+        return editalList;
     }
-     public void alterar() throws SQLException, ClassNotFoundException {
-        FuncionarioDAO.alterar(this);
+
+    public void setEditalList(List<Edital> editalList) {
+        this.editalList = editalList;
     }
-      public void excluir() throws SQLException, ClassNotFoundException {
-        FuncionarioDAO.excluir(this);
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codFuncionario != null ? codFuncionario.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Funcionario)) {
+            return false;
+        }
+        Funcionario other = (Funcionario) object;
+        if ((this.codFuncionario == null && other.codFuncionario != null) || (this.codFuncionario != null && !this.codFuncionario.equals(other.codFuncionario))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Funcionario[ codFuncionario=" + codFuncionario + " ]";
+    }
+    
 }

@@ -1,6 +1,7 @@
 
 package controller;
 
+import dao.CandidatoDAO;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.logging.Level;
@@ -11,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Candidato;
 
 
 @WebServlet(name = "pesquisaCandidatoController", urlPatterns = {"/pesquisaCandidatoController"})
@@ -22,7 +22,7 @@ public class pesquisaCandidatoController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
         
         try {
-            request.setAttribute("candidatos", Candidato.obterCandidatos());
+            request.setAttribute("candidatos", CandidatoDAO.getInstance().obterCandidatos());
             RequestDispatcher view = request.getRequestDispatcher("/pesquisaCandidato.jsp");
             view.forward(request,response);
         } finally {

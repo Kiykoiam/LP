@@ -1,22 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package modelo;
 
-import dao.BolsaDAO;
-import java.sql.SQLException;
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-public class Bolsa {
-    private int codBolsa;
+/**
+ *
+ * @author Aluno
+ */
+@Entity
+@Table(name = "bolsa")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Bolsa.findAll", query = "SELECT b FROM Bolsa b"),
+    @NamedQuery(name = "Bolsa.findByCodBolsa", query = "SELECT b FROM Bolsa b WHERE b.codBolsa = :codBolsa"),
+    @NamedQuery(name = "Bolsa.findByNome", query = "SELECT b FROM Bolsa b WHERE b.nome = :nome"),
+    @NamedQuery(name = "Bolsa.findByQtdadeVagas", query = "SELECT b FROM Bolsa b WHERE b.qtdadeVagas = :qtdadeVagas"),
+    @NamedQuery(name = "Bolsa.findByDescricao", query = "SELECT b FROM Bolsa b WHERE b.descricao = :descricao"),
+    @NamedQuery(name = "Bolsa.findByRequisitos", query = "SELECT b FROM Bolsa b WHERE b.requisitos = :requisitos")})
+public class Bolsa implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codBolsa")
+    private Integer codBolsa;
+    @Size(max = 45)
+    @Column(name = "nome")
     private String nome;
-    private int qtdadeVagas;
+    @Column(name = "qtdadeVagas")
+    private Integer qtdadeVagas;
+    @Size(max = 45)
+    @Column(name = "descricao")
     private String descricao;
+    @Size(max = 45)
+    @Column(name = "requisitos")
     private String requisitos;
+    @OneToMany(mappedBy = "bOLSAcodBolsa")
+    private List<Edital> editalList;
 
-    public Bolsa(int codBolsa, String nome, int qtdadeVagas, String descricao, String requisitos) {
+    public Bolsa() {
+    }
+
+    public Bolsa(Integer codBolsa) {
         this.codBolsa = codBolsa;
-        this.nome = nome;
-        this.qtdadeVagas = qtdadeVagas;
-        this.descricao = descricao;
-        this.requisitos = requisitos;
+    }
+
+    public Integer getCodBolsa() {
+        return codBolsa;
+    }
+
+    public void setCodBolsa(Integer codBolsa) {
+        this.codBolsa = codBolsa;
     }
 
     public String getNome() {
@@ -27,11 +80,11 @@ public class Bolsa {
         this.nome = nome;
     }
 
-    public int getQtdadeVagas() {
+    public Integer getQtdadeVagas() {
         return qtdadeVagas;
     }
 
-    public void setQtdadeVagas(int qtdadeVagas) {
+    public void setQtdadeVagas(Integer qtdadeVagas) {
         this.qtdadeVagas = qtdadeVagas;
     }
 
@@ -50,29 +103,39 @@ public class Bolsa {
     public void setRequisitos(String requisitos) {
         this.requisitos = requisitos;
     }
-    
-    public static List<Bolsa> obterBolsas() throws ClassNotFoundException {
-        return BolsaDAO.obterBolsas();
+
+    @XmlTransient
+    public List<Edital> getEditalList() {
+        return editalList;
     }
 
-    public int getCodBolsa() {
-        return codBolsa;
+    public void setEditalList(List<Edital> editalList) {
+        this.editalList = editalList;
     }
 
-    public void setCodBolsa(int codBolsa) {
-        this.codBolsa = codBolsa;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codBolsa != null ? codBolsa.hashCode() : 0);
+        return hash;
     }
-    public static Bolsa obterBolsa(int codBolsa) throws ClassNotFoundException {
-        return BolsaDAO.obterBolsa(codBolsa);
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Bolsa)) {
+            return false;
+        }
+        Bolsa other = (Bolsa) object;
+        if ((this.codBolsa == null && other.codBolsa != null) || (this.codBolsa != null && !this.codBolsa.equals(other.codBolsa))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Bolsa[ codBolsa=" + codBolsa + " ]";
     }
     
-    public void gravar() throws SQLException, ClassNotFoundException {
-        BolsaDAO.gravar(this);
-    }
-     public void alterar() throws SQLException, ClassNotFoundException {
-        BolsaDAO.alterar(this);
-    }
-     public void excluir() throws SQLException, ClassNotFoundException {
-        BolsaDAO.excluir(this);
-    }
 }

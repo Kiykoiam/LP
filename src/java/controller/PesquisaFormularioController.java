@@ -1,5 +1,6 @@
 package controller;
 
+import dao.FormularioDAO;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.logging.Level;
@@ -9,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Formulario;
 
 /**
  *
@@ -30,7 +30,7 @@ public class PesquisaFormularioController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
         
         try {
-            request.setAttribute("formularios", Formulario.obterFormularios());
+            request.setAttribute("formularios", FormularioDAO.getInstance().obterFormularios());
             RequestDispatcher view = request.getRequestDispatcher("/pesquisaFormulario.jsp");
             view.forward(request,response);
         } finally {

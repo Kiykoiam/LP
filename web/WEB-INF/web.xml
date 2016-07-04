@@ -100,6 +100,14 @@
         <servlet-name>RelatorioCursoPar</servlet-name>
         <servlet-class>controller.RelatorioCursoPar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PesquisaUsuarioController</servlet-name>
+        <servlet-class>controller.PesquisaUsuarioController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PesquisaGrupoController</servlet-name>
+        <servlet-class>controller.PesquisaGrupoController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PesquisaCursoController</servlet-name>
         <url-pattern>/PesquisaCursoController</url-pattern>
@@ -199,6 +207,14 @@
     <servlet-mapping>
         <servlet-name>RelatorioCursoPar</servlet-name>
         <url-pattern>/RelatorioCursoPar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PesquisaUsuarioController</servlet-name>
+        <url-pattern>/PesquisaUsuarioController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PesquisaGrupoController</servlet-name>
+        <url-pattern>/PesquisaGrupoController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

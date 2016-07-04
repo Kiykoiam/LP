@@ -1,132 +1,238 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package modelo;
 
-import dao.FormularioDAO;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class Formulario {
-    //cadastrar familia
-    private int codForm;
+/**
+ *
+ * @author Aluno
+ */
+@Entity
+@Table(name = "formulario")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Formulario.findAll", query = "SELECT f FROM Formulario f"),
+    @NamedQuery(name = "Formulario.findByCodForm", query = "SELECT f FROM Formulario f WHERE f.codForm = :codForm"),
+    @NamedQuery(name = "Formulario.findByResponsavelManutencaoFamilia", query = "SELECT f FROM Formulario f WHERE f.responsavelManutencaoFamilia = :responsavelManutencaoFamilia"),
+    @NamedQuery(name = "Formulario.findByQtAutomovel", query = "SELECT f FROM Formulario f WHERE f.qtAutomovel = :qtAutomovel"),
+    @NamedQuery(name = "Formulario.findByQtTvCor", query = "SELECT f FROM Formulario f WHERE f.qtTvCor = :qtTvCor"),
+    @NamedQuery(name = "Formulario.findByQtMaquinaDeLavar", query = "SELECT f FROM Formulario f WHERE f.qtMaquinaDeLavar = :qtMaquinaDeLavar"),
+    @NamedQuery(name = "Formulario.findByQtGeladeira", query = "SELECT f FROM Formulario f WHERE f.qtGeladeira = :qtGeladeira"),
+    @NamedQuery(name = "Formulario.findByQtTvCabo", query = "SELECT f FROM Formulario f WHERE f.qtTvCabo = :qtTvCabo"),
+    @NamedQuery(name = "Formulario.findByQtPc", query = "SELECT f FROM Formulario f WHERE f.qtPc = :qtPc"),
+    @NamedQuery(name = "Formulario.findByQtInternetPaga", query = "SELECT f FROM Formulario f WHERE f.qtInternetPaga = :qtInternetPaga"),
+    @NamedQuery(name = "Formulario.findByQtEmpregadaMensalista", query = "SELECT f FROM Formulario f WHERE f.qtEmpregadaMensalista = :qtEmpregadaMensalista"),
+    @NamedQuery(name = "Formulario.findByQtEmpregadaDiarista", query = "SELECT f FROM Formulario f WHERE f.qtEmpregadaDiarista = :qtEmpregadaDiarista"),
+    @NamedQuery(name = "Formulario.findByQtBanheiros", query = "SELECT f FROM Formulario f WHERE f.qtBanheiros = :qtBanheiros"),
+    @NamedQuery(name = "Formulario.findByQtQuartos", query = "SELECT f FROM Formulario f WHERE f.qtQuartos = :qtQuartos"),
+    @NamedQuery(name = "Formulario.findByEnsinoFundamental", query = "SELECT f FROM Formulario f WHERE f.ensinoFundamental = :ensinoFundamental"),
+    @NamedQuery(name = "Formulario.findByEnsinoMedio", query = "SELECT f FROM Formulario f WHERE f.ensinoMedio = :ensinoMedio"),
+    @NamedQuery(name = "Formulario.findByMembroFamilia", query = "SELECT f FROM Formulario f WHERE f.membroFamilia = :membroFamilia"),
+    @NamedQuery(name = "Formulario.findByEstadoCivil", query = "SELECT f FROM Formulario f WHERE f.estadoCivil = :estadoCivil"),
+    @NamedQuery(name = "Formulario.findByParentesco", query = "SELECT f FROM Formulario f WHERE f.parentesco = :parentesco"),
+    @NamedQuery(name = "Formulario.findBySituacaoTrab", query = "SELECT f FROM Formulario f WHERE f.situacaoTrab = :situacaoTrab"),
+    @NamedQuery(name = "Formulario.findByOcupacao", query = "SELECT f FROM Formulario f WHERE f.ocupacao = :ocupacao"),
+    @NamedQuery(name = "Formulario.findByEscolaridade", query = "SELECT f FROM Formulario f WHERE f.escolaridade = :escolaridade"),
+    @NamedQuery(name = "Formulario.findByRendaAluguelImovel", query = "SELECT f FROM Formulario f WHERE f.rendaAluguelImovel = :rendaAluguelImovel"),
+    @NamedQuery(name = "Formulario.findByPensaoPorMorte", query = "SELECT f FROM Formulario f WHERE f.pensaoPorMorte = :pensaoPorMorte"),
+    @NamedQuery(name = "Formulario.findByPensaoAlimenticia", query = "SELECT f FROM Formulario f WHERE f.pensaoAlimenticia = :pensaoAlimenticia"),
+    @NamedQuery(name = "Formulario.findByAjudaTerceiros", query = "SELECT f FROM Formulario f WHERE f.ajudaTerceiros = :ajudaTerceiros"),
+    @NamedQuery(name = "Formulario.findByBeneficiosSociais", query = "SELECT f FROM Formulario f WHERE f.beneficiosSociais = :beneficiosSociais"),
+    @NamedQuery(name = "Formulario.findByRendaMensalBruta", query = "SELECT f FROM Formulario f WHERE f.rendaMensalBruta = :rendaMensalBruta"),
+    @NamedQuery(name = "Formulario.findByMeioDeLocomocao", query = "SELECT f FROM Formulario f WHERE f.meioDeLocomocao = :meioDeLocomocao"),
+    @NamedQuery(name = "Formulario.findByAtividadeAcademicas", query = "SELECT f FROM Formulario f WHERE f.atividadeAcademicas = :atividadeAcademicas"),
+    @NamedQuery(name = "Formulario.findByAtividadeRemunerada", query = "SELECT f FROM Formulario f WHERE f.atividadeRemunerada = :atividadeRemunerada"),
+    @NamedQuery(name = "Formulario.findByCondicaoDeManutencao", query = "SELECT f FROM Formulario f WHERE f.condicaoDeManutencao = :condicaoDeManutencao"),
+    @NamedQuery(name = "Formulario.findByMora", query = "SELECT f FROM Formulario f WHERE f.mora = :mora"),
+    @NamedQuery(name = "Formulario.findByVcFamilia", query = "SELECT f FROM Formulario f WHERE f.vcFamilia = :vcFamilia"),
+    @NamedQuery(name = "Formulario.findByResideFamilia", query = "SELECT f FROM Formulario f WHERE f.resideFamilia = :resideFamilia"),
+    @NamedQuery(name = "Formulario.findByImovelSituacao", query = "SELECT f FROM Formulario f WHERE f.imovelSituacao = :imovelSituacao"),
+    @NamedQuery(name = "Formulario.findByDescricaoCasa", query = "SELECT f FROM Formulario f WHERE f.descricaoCasa = :descricaoCasa"),
+    @NamedQuery(name = "Formulario.findByAguaF", query = "SELECT f FROM Formulario f WHERE f.aguaF = :aguaF"),
+    @NamedQuery(name = "Formulario.findByLuzF", query = "SELECT f FROM Formulario f WHERE f.luzF = :luzF"),
+    @NamedQuery(name = "Formulario.findByTelefoneF", query = "SELECT f FROM Formulario f WHERE f.telefoneF = :telefoneF"),
+    @NamedQuery(name = "Formulario.findByCondominioF", query = "SELECT f FROM Formulario f WHERE f.condominioF = :condominioF"),
+    @NamedQuery(name = "Formulario.findByMensalidadeEscolaF", query = "SELECT f FROM Formulario f WHERE f.mensalidadeEscolaF = :mensalidadeEscolaF"),
+    @NamedQuery(name = "Formulario.findByAlimentacaoF", query = "SELECT f FROM Formulario f WHERE f.alimentacaoF = :alimentacaoF"),
+    @NamedQuery(name = "Formulario.findBySaudeF", query = "SELECT f FROM Formulario f WHERE f.saudeF = :saudeF"),
+    @NamedQuery(name = "Formulario.findByTransporteF", query = "SELECT f FROM Formulario f WHERE f.transporteF = :transporteF"),
+    @NamedQuery(name = "Formulario.findByIptuF", query = "SELECT f FROM Formulario f WHERE f.iptuF = :iptuF"),
+    @NamedQuery(name = "Formulario.findByAluguelF", query = "SELECT f FROM Formulario f WHERE f.aluguelF = :aluguelF"),
+    @NamedQuery(name = "Formulario.findByPensaoAlimentF", query = "SELECT f FROM Formulario f WHERE f.pensaoAlimentF = :pensaoAlimentF"),
+    @NamedQuery(name = "Formulario.findByOutroF", query = "SELECT f FROM Formulario f WHERE f.outroF = :outroF"),
+    @NamedQuery(name = "Formulario.findByAguaE", query = "SELECT f FROM Formulario f WHERE f.aguaE = :aguaE"),
+    @NamedQuery(name = "Formulario.findByLuzE", query = "SELECT f FROM Formulario f WHERE f.luzE = :luzE"),
+    @NamedQuery(name = "Formulario.findByTelefoneE", query = "SELECT f FROM Formulario f WHERE f.telefoneE = :telefoneE"),
+    @NamedQuery(name = "Formulario.findByCondominioE", query = "SELECT f FROM Formulario f WHERE f.condominioE = :condominioE"),
+    @NamedQuery(name = "Formulario.findByIptuE", query = "SELECT f FROM Formulario f WHERE f.iptuE = :iptuE"),
+    @NamedQuery(name = "Formulario.findByAluguelE", query = "SELECT f FROM Formulario f WHERE f.aluguelE = :aluguelE")})
+public class Formulario implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codForm")
+    private Integer codForm;
+    @Size(max = 40)
+    @Column(name = "responsavelManutencaoFamilia")
     private String responsavelManutencaoFamilia;
-    private int qtAutomovel;
-    private int qtTvCor;
-    private int qtMaquinaDeLavar;
-    private int qtGeladeira;
-    private int qtTvCabo;
-    private int qtPc;
-    private int qtInternetPaga;
-    private int qtEmpregadaMensalista;
-    private int qtEmpregadaDiarista;    
-    private int qtBanheiros;
-    private int qtQuartos;    
-    //instituicao em que cursou fundamental/medio
+    @Column(name = "qtAutomovel")
+    private Integer qtAutomovel;
+    @Column(name = "qtTvCor")
+    private Integer qtTvCor;
+    @Column(name = "qtMaquinaDeLavar")
+    private Integer qtMaquinaDeLavar;
+    @Column(name = "qtGeladeira")
+    private Integer qtGeladeira;
+    @Column(name = "qtTvCabo")
+    private Integer qtTvCabo;
+    @Column(name = "qtPc")
+    private Integer qtPc;
+    @Column(name = "qtInternetPaga")
+    private Integer qtInternetPaga;
+    @Column(name = "qtEmpregadaMensalista")
+    private Integer qtEmpregadaMensalista;
+    @Column(name = "qtEmpregadaDiarista")
+    private Integer qtEmpregadaDiarista;
+    @Column(name = "qtBanheiros")
+    private Integer qtBanheiros;
+    @Column(name = "qtQuartos")
+    private Integer qtQuartos;
+    @Size(max = 45)
+    @Column(name = "ensinoFundamental")
     private String ensinoFundamental;
-    private String ensinoMedio;    
-    //cadastro renda familiar
+    @Size(max = 45)
+    @Column(name = "ensinoMedio")
+    private String ensinoMedio;
+    @Size(max = 45)
+    @Column(name = "membroFamilia")
     private String membroFamilia;
+    @Size(max = 45)
+    @Column(name = "estadoCivil")
     private String estadoCivil;
+    @Size(max = 45)
+    @Column(name = "parentesco")
     private String parentesco;
+    @Size(max = 45)
+    @Column(name = "situacaoTrab")
     private String situacaoTrab;
+    @Size(max = 45)
+    @Column(name = "ocupacao")
     private String ocupacao;
+    @Size(max = 45)
+    @Column(name = "escolaridade")
     private String escolaridade;
-    private float rendaAluguelImovel;
-    private float pensaoPorMorte;
-    private float pensaoAlimenticia;
-    private float ajudaTerceiros;
-    private float beneficiosSociais;
-    private float rendaMensalBruta;    
-    //cadastrar meio locomocao
-    private String meioDeLocomocao;    
-    //cadastrar atividades
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "rendaAluguelImovel")
+    private Float rendaAluguelImovel;
+    @Column(name = "pensaoPorMorte")
+    private Float pensaoPorMorte;
+    @Column(name = "pensaoAlimenticia")
+    private Float pensaoAlimenticia;
+    @Column(name = "ajudaTerceiros")
+    private Float ajudaTerceiros;
+    @Column(name = "beneficiosSociais")
+    private Float beneficiosSociais;
+    @Column(name = "rendaMensalBruta")
+    private Float rendaMensalBruta;
+    @Size(max = 40)
+    @Column(name = "meioDeLocomocao")
+    private String meioDeLocomocao;
+    @Size(max = 45)
+    @Column(name = "atividadeAcademicas")
     private String atividadeAcademicas;
-    private String atividadeRemunerada;    
-    //cadastrar manutenção estudantil
-    private String condicaoDeManutencao;    
-    //manter moradia
+    @Size(max = 45)
+    @Column(name = "atividadeRemunerada")
+    private String atividadeRemunerada;
+    @Size(max = 45)
+    @Column(name = "condicaoDeManutencao")
+    private String condicaoDeManutencao;
+    @Size(max = 45)
+    @Column(name = "mora")
     private String mora;
+    @Size(max = 45)
+    @Column(name = "vcFamilia")
     private String vcFamilia;
+    @Size(max = 45)
+    @Column(name = "resideFamilia")
     private String resideFamilia;
+    @Size(max = 45)
+    @Column(name = "imovelSituacao")
     private String imovelSituacao;
+    @Size(max = 45)
+    @Column(name = "descricaoCasa")
     private String descricaoCasa;
-    //despesas
-    private float aguaF;
-    private float luzF;
-    private float telefoneF;
-    private float condominioF;
-    private float mensalidadeEscolaF;
-    private float alimentacaoF;
-    private float saudeF;
-    private float transporteF;
-    private float iptuF;
-    private float aluguelF;
-    private float pensaoAlimentF;
-    private float outroF;
-    private float aguaE;
-    private float luzE;
-    private float telefoneE;
-    private float condominioE;
-    private float iptuE;
-    private float aluguelE;
-    private Candidato candidato;
-    private int codCandidato;
-    
+    @Column(name = "aguaF")
+    private Float aguaF;
+    @Column(name = "luzF")
+    private Float luzF;
+    @Column(name = "telefoneF")
+    private Float telefoneF;
+    @Column(name = "condominioF")
+    private Float condominioF;
+    @Column(name = "mensalidadeEscolaF")
+    private Float mensalidadeEscolaF;
+    @Column(name = "alimentacaoF")
+    private Float alimentacaoF;
+    @Column(name = "saudeF")
+    private Float saudeF;
+    @Column(name = "transporteF")
+    private Float transporteF;
+    @Column(name = "iptuF")
+    private Float iptuF;
+    @Column(name = "aluguelF")
+    private Float aluguelF;
+    @Column(name = "pensaoAlimentF")
+    private Float pensaoAlimentF;
+    @Column(name = "outroF")
+    private Float outroF;
+    @Column(name = "aguaE")
+    private Float aguaE;
+    @Column(name = "luzE")
+    private Float luzE;
+    @Column(name = "telefoneE")
+    private Float telefoneE;
+    @Column(name = "condominioE")
+    private Float condominioE;
+    @Column(name = "iptuE")
+    private Float iptuE;
+    @Column(name = "aluguelE")
+    private Float aluguelE;
+    @JoinColumn(name = "CANDIDATO_codCandidato", referencedColumnName = "codCandidato")
+    @ManyToOne(optional = false)
+    private Candidato cANDIDATOcodCandidato;
 
-    public Formulario(int codForm, String responsavelManutencaoFamilia, int qtAutomovel, int qtTvCor, int qtMaquinaDeLavar, int qtGeladeira, int qtTvCabo, int qtPc, int qtInternetPaga, int qtEmpregadaMensalista, int qtEmpregadaDiarista, int qtBanheiros, int qtQuartos, String ensinoFundamental, String ensinoMedio, String membroFamilia, String estadoCivil, String parentesco, String situacaoTrab, String ocupacao, String escolaridade, float rendaAluguelImovel, float pensaoPorMorte, float pensaoAlimenticia, float ajudaTerceiros, float beneficiosSociais, float rendaMensalBruta, String meioDeLocomocao, String atividadeAcademicas, String atividadeRemunerada, String condicaoDeManutencao, String mora, String vcFamilia, String resideFamilia, String imovelSituacao, String descricaoCasa, float aguaF, float luzF, float telefoneF, float condominioF, float mensalidadeEscolaF, float alimentacaoF, float saudeF, float transporteF, float iptuF, float aluguelF, float pensaoAlimentF, float outroF, float aguaE, float luzE, float telefoneE, float condominioE, float iptuE, float aluguelE, Candidato candidato) {
+    public Formulario() {
+    }
+
+    public Formulario(Integer codForm) {
         this.codForm = codForm;
-        this.responsavelManutencaoFamilia = responsavelManutencaoFamilia;
-        this.qtAutomovel = qtAutomovel;
-        this.qtTvCor = qtTvCor;
-        this.qtMaquinaDeLavar = qtMaquinaDeLavar;
-        this.qtGeladeira = qtGeladeira;
-        this.qtTvCabo = qtTvCabo;
-        this.qtPc = qtPc;
-        this.qtInternetPaga = qtInternetPaga;
-        this.qtEmpregadaMensalista = qtEmpregadaMensalista;
-        this.qtEmpregadaDiarista = qtEmpregadaDiarista;
-        this.qtBanheiros = qtBanheiros;
-        this.qtQuartos = qtQuartos;
-        this.ensinoFundamental = ensinoFundamental;
-        this.ensinoMedio = ensinoMedio;
-        this.membroFamilia = membroFamilia;
-        this.estadoCivil = estadoCivil;
-        this.parentesco = parentesco;
-        this.situacaoTrab = situacaoTrab;
-        this.ocupacao = ocupacao;
-        this.escolaridade = escolaridade;
-        this.rendaAluguelImovel = rendaAluguelImovel;
-        this.pensaoPorMorte = pensaoPorMorte;
-        this.pensaoAlimenticia = pensaoAlimenticia;
-        this.ajudaTerceiros = ajudaTerceiros;
-        this.beneficiosSociais = beneficiosSociais;
-        this.rendaMensalBruta = rendaMensalBruta;
-        this.meioDeLocomocao = meioDeLocomocao;
-        this.atividadeAcademicas = atividadeAcademicas;
-        this.atividadeRemunerada = atividadeRemunerada;
-        this.condicaoDeManutencao = condicaoDeManutencao;
-        this.mora = mora;
-        this.vcFamilia = vcFamilia;
-        this.resideFamilia = resideFamilia;
-        this.imovelSituacao = imovelSituacao;
-        this.descricaoCasa = descricaoCasa;
-        this.aguaF = aguaF;
-        this.luzF = luzF;
-        this.telefoneF = telefoneF;
-        this.condominioF = condominioF;
-        this.mensalidadeEscolaF = mensalidadeEscolaF;
-        this.alimentacaoF = alimentacaoF;
-        this.saudeF = saudeF;
-        this.transporteF = transporteF;
-        this.iptuF = iptuF;
-        this.aluguelF = aluguelF;
-        this.pensaoAlimentF = pensaoAlimentF;
-        this.outroF = outroF;
-        this.aguaE = aguaE;
-        this.luzE = luzE;
-        this.telefoneE = telefoneE;
-        this.condominioE = condominioE;
-        this.iptuE = iptuE;
-        this.aluguelE = aluguelE;
-        this.candidato = candidato;
+    }
+
+    public Integer getCodForm() {
+        return codForm;
+    }
+
+    public void setCodForm(Integer codForm) {
+        this.codForm = codForm;
     }
 
     public String getResponsavelManutencaoFamilia() {
@@ -137,91 +243,91 @@ public class Formulario {
         this.responsavelManutencaoFamilia = responsavelManutencaoFamilia;
     }
 
-    public int getQtAutomovel() {
+    public Integer getQtAutomovel() {
         return qtAutomovel;
     }
 
-    public void setQtAutomovel(int qtAutomovel) {
+    public void setQtAutomovel(Integer qtAutomovel) {
         this.qtAutomovel = qtAutomovel;
     }
 
-    public int getQtTvCor() {
+    public Integer getQtTvCor() {
         return qtTvCor;
     }
 
-    public void setQtTvCor(int qtTvCor) {
+    public void setQtTvCor(Integer qtTvCor) {
         this.qtTvCor = qtTvCor;
     }
 
-    public int getQtMaquinaDeLavar() {
+    public Integer getQtMaquinaDeLavar() {
         return qtMaquinaDeLavar;
     }
 
-    public void setQtMaquinaDeLavar(int qtMaquinaDeLavar) {
+    public void setQtMaquinaDeLavar(Integer qtMaquinaDeLavar) {
         this.qtMaquinaDeLavar = qtMaquinaDeLavar;
     }
 
-    public int getQtGeladeira() {
+    public Integer getQtGeladeira() {
         return qtGeladeira;
     }
 
-    public void setQtGeladeira(int qtGeladeira) {
+    public void setQtGeladeira(Integer qtGeladeira) {
         this.qtGeladeira = qtGeladeira;
     }
 
-    public int getQtTvCabo() {
+    public Integer getQtTvCabo() {
         return qtTvCabo;
     }
 
-    public void setQtTvCabo(int qtTvCabo) {
+    public void setQtTvCabo(Integer qtTvCabo) {
         this.qtTvCabo = qtTvCabo;
     }
 
-    public int getQtPc() {
+    public Integer getQtPc() {
         return qtPc;
     }
 
-    public void setQtPc(int qtPc) {
+    public void setQtPc(Integer qtPc) {
         this.qtPc = qtPc;
     }
 
-    public int getQtInternetPaga() {
+    public Integer getQtInternetPaga() {
         return qtInternetPaga;
     }
 
-    public void setQtInternetPaga(int qtInternetPaga) {
+    public void setQtInternetPaga(Integer qtInternetPaga) {
         this.qtInternetPaga = qtInternetPaga;
     }
 
-    public int getQtEmpregadaMensalista() {
+    public Integer getQtEmpregadaMensalista() {
         return qtEmpregadaMensalista;
     }
 
-    public void setQtEmpregadaMensalista(int qtEmpregadaMensalista) {
+    public void setQtEmpregadaMensalista(Integer qtEmpregadaMensalista) {
         this.qtEmpregadaMensalista = qtEmpregadaMensalista;
     }
 
-    public int getQtEmpregadaDiarista() {
+    public Integer getQtEmpregadaDiarista() {
         return qtEmpregadaDiarista;
     }
 
-    public void setQtEmpregadaDiarista(int qtEmpregadaDiarista) {
+    public void setQtEmpregadaDiarista(Integer qtEmpregadaDiarista) {
         this.qtEmpregadaDiarista = qtEmpregadaDiarista;
     }
 
-    public int getQtBanheiros() {
+    public Integer getQtBanheiros() {
         return qtBanheiros;
     }
 
-    public void setQtBanheiros(int qtBanheiros) {
+    public void setQtBanheiros(Integer qtBanheiros) {
         this.qtBanheiros = qtBanheiros;
     }
 
-    public int getQtQuartos() {
+    public Integer getQtQuartos() {
         return qtQuartos;
     }
 
-    public void setQtQuartos(int qtQuartos) {
+    public void setQtQuartos(Integer qtQuartos) {
         this.qtQuartos = qtQuartos;
     }
 
@@ -289,51 +395,51 @@ public class Formulario {
         this.escolaridade = escolaridade;
     }
 
-    public float getRendaAluguelImovel() {
+    public Float getRendaAluguelImovel() {
         return rendaAluguelImovel;
     }
 
-    public void setRendaAluguelImovel(float rendaAluguelImovel) {
+    public void setRendaAluguelImovel(Float rendaAluguelImovel) {
         this.rendaAluguelImovel = rendaAluguelImovel;
     }
 
-    public float getPensaoPorMorte() {
+    public Float getPensaoPorMorte() {
         return pensaoPorMorte;
     }
 
-    public void setPensaoPorMorte(float pensaoPorMorte) {
+    public void setPensaoPorMorte(Float pensaoPorMorte) {
         this.pensaoPorMorte = pensaoPorMorte;
     }
 
-    public float getPensaoAlimenticia() {
+    public Float getPensaoAlimenticia() {
         return pensaoAlimenticia;
     }
 
-    public void setPensaoAlimenticia(float pensaoAlimenticia) {
+    public void setPensaoAlimenticia(Float pensaoAlimenticia) {
         this.pensaoAlimenticia = pensaoAlimenticia;
     }
 
-    public float getAjudaTerceiros() {
+    public Float getAjudaTerceiros() {
         return ajudaTerceiros;
     }
 
-    public void setAjudaTerceiros(float ajudaTerceiros) {
+    public void setAjudaTerceiros(Float ajudaTerceiros) {
         this.ajudaTerceiros = ajudaTerceiros;
     }
 
-    public float getBeneficiosSociais() {
+    public Float getBeneficiosSociais() {
         return beneficiosSociais;
     }
 
-    public void setBeneficiosSociais(float beneficiosSociais) {
+    public void setBeneficiosSociais(Float beneficiosSociais) {
         this.beneficiosSociais = beneficiosSociais;
     }
 
-    public float getRendaMensalBruta() {
+    public Float getRendaMensalBruta() {
         return rendaMensalBruta;
     }
 
-    public void setRendaMensalBruta(float rendaMensalBruta) {
+    public void setRendaMensalBruta(Float rendaMensalBruta) {
         this.rendaMensalBruta = rendaMensalBruta;
     }
 
@@ -345,12 +451,12 @@ public class Formulario {
         this.meioDeLocomocao = meioDeLocomocao;
     }
 
-    public String getAtividdeAcademicas() {
+    public String getAtividadeAcademicas() {
         return atividadeAcademicas;
     }
 
-    public void setAtividdeAcademicas(String atividdeAcademicas) {
-        this.atividadeAcademicas = atividdeAcademicas;
+    public void setAtividadeAcademicas(String atividadeAcademicas) {
+        this.atividadeAcademicas = atividadeAcademicas;
     }
 
     public String getAtividadeRemunerada() {
@@ -377,12 +483,12 @@ public class Formulario {
         this.mora = mora;
     }
 
-    public String getBcFamilia() {
+    public String getVcFamilia() {
         return vcFamilia;
     }
 
-    public void setBcFamilia(String bcFamilia) {
-        this.vcFamilia = bcFamilia;
+    public void setVcFamilia(String vcFamilia) {
+        this.vcFamilia = vcFamilia;
     }
 
     public String getResideFamilia() {
@@ -409,210 +515,181 @@ public class Formulario {
         this.descricaoCasa = descricaoCasa;
     }
 
-    public float getAguaF() {
+    public Float getAguaF() {
         return aguaF;
     }
 
-    public void setAguaF(float aguaF) {
+    public void setAguaF(Float aguaF) {
         this.aguaF = aguaF;
     }
 
-    public float getLuzF() {
+    public Float getLuzF() {
         return luzF;
     }
 
-    public void setLuzF(float luzF) {
+    public void setLuzF(Float luzF) {
         this.luzF = luzF;
     }
 
-    public float getTelefoneF() {
+    public Float getTelefoneF() {
         return telefoneF;
     }
 
-    public void setTelefoneF(float telefoneF) {
+    public void setTelefoneF(Float telefoneF) {
         this.telefoneF = telefoneF;
     }
 
-    public float getCondominioF() {
+    public Float getCondominioF() {
         return condominioF;
     }
 
-    public void setCondominioF(float condominioF) {
+    public void setCondominioF(Float condominioF) {
         this.condominioF = condominioF;
     }
 
-    public float getMensalidadeEscolaF() {
+    public Float getMensalidadeEscolaF() {
         return mensalidadeEscolaF;
     }
 
-    public void setMensalidadeEscolaF(float mensalidadeEscolaF) {
+    public void setMensalidadeEscolaF(Float mensalidadeEscolaF) {
         this.mensalidadeEscolaF = mensalidadeEscolaF;
     }
 
-    public float getAlimentacaoF() {
+    public Float getAlimentacaoF() {
         return alimentacaoF;
     }
 
-    public void setAlimentacaoF(float alimentacaoF) {
+    public void setAlimentacaoF(Float alimentacaoF) {
         this.alimentacaoF = alimentacaoF;
     }
 
-    public float getSaudeF() {
+    public Float getSaudeF() {
         return saudeF;
     }
 
-    public void setSaudeF(float saudeF) {
+    public void setSaudeF(Float saudeF) {
         this.saudeF = saudeF;
     }
 
-    public float getTransporteF() {
+    public Float getTransporteF() {
         return transporteF;
     }
 
-    public void setTransporteF(float transporteF) {
+    public void setTransporteF(Float transporteF) {
         this.transporteF = transporteF;
     }
 
-    public float getIptuF() {
+    public Float getIptuF() {
         return iptuF;
     }
 
-    public void setIptuF(float iptuF) {
+    public void setIptuF(Float iptuF) {
         this.iptuF = iptuF;
     }
 
-    public float getAluguelF() {
+    public Float getAluguelF() {
         return aluguelF;
     }
 
-    public void setAluguelF(float aluguelF) {
+    public void setAluguelF(Float aluguelF) {
         this.aluguelF = aluguelF;
     }
 
-    public float getPensaoAlimentF() {
+    public Float getPensaoAlimentF() {
         return pensaoAlimentF;
     }
 
-    public void setPensaoAlimentF(float pensaoAlimentF) {
+    public void setPensaoAlimentF(Float pensaoAlimentF) {
         this.pensaoAlimentF = pensaoAlimentF;
     }
 
-    public float getOutroF() {
+    public Float getOutroF() {
         return outroF;
     }
 
-    public void setOutroF(float outroF) {
+    public void setOutroF(Float outroF) {
         this.outroF = outroF;
     }
 
-    public float getAguaE() {
+    public Float getAguaE() {
         return aguaE;
     }
 
-    public void setAguaE(float aguaE) {
+    public void setAguaE(Float aguaE) {
         this.aguaE = aguaE;
     }
 
-    public float getLuzE() {
+    public Float getLuzE() {
         return luzE;
     }
 
-    public void setLuzE(float luzE) {
+    public void setLuzE(Float luzE) {
         this.luzE = luzE;
     }
 
-    public float getTelefoneE() {
+    public Float getTelefoneE() {
         return telefoneE;
     }
 
-    public void setTelefoneE(float telefoneE) {
+    public void setTelefoneE(Float telefoneE) {
         this.telefoneE = telefoneE;
     }
 
-    public float getCondominioE() {
+    public Float getCondominioE() {
         return condominioE;
     }
 
-    public void setCondominioE(float condominioE) {
+    public void setCondominioE(Float condominioE) {
         this.condominioE = condominioE;
     }
 
-    public float getIptuE() {
+    public Float getIptuE() {
         return iptuE;
     }
 
-    public void setIptuE(float iptuE) {
+    public void setIptuE(Float iptuE) {
         this.iptuE = iptuE;
     }
 
-    public float getAluguelE() {
+    public Float getAluguelE() {
         return aluguelE;
     }
 
-    public void setAluguelE(float aluguelE) {
+    public void setAluguelE(Float aluguelE) {
         this.aluguelE = aluguelE;
     }
 
-    public int getCodForm() {
-        return codForm;
+    public Candidato getCANDIDATOcodCandidato() {
+        return cANDIDATOcodCandidato;
     }
 
-    public void setCodForm(int codForm) {
-        this.codForm = codForm;
+    public void setCANDIDATOcodCandidato(Candidato cANDIDATOcodCandidato) {
+        this.cANDIDATOcodCandidato = cANDIDATOcodCandidato;
     }
 
-    public String getAtividadeAcademicas() {
-        return atividadeAcademicas;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codForm != null ? codForm.hashCode() : 0);
+        return hash;
     }
 
-    public void setAtividadeAcademicas(String atividadeAcademicas) {
-        this.atividadeAcademicas = atividadeAcademicas;
-    }
-
-    public String getVcFamilia() {
-        return vcFamilia;
-    }
-
-    public void setVcFamilia(String vcFamilia) {
-        this.vcFamilia = vcFamilia;
-    }
-    public static List<Formulario> obterFormularios() throws ClassNotFoundException {
-        return FormularioDAO.obterFormularios();
-    }
-    public static Formulario obterFormulario(int codFormulario) throws ClassNotFoundException {
-        return FormularioDAO.obterFormulario(codFormulario);
-    }
-    
-    public void gravar() throws SQLException, ClassNotFoundException {
-        FormularioDAO.gravar(this);
-    }
-     public void alterar() throws SQLException, ClassNotFoundException {
-        FormularioDAO.alterar(this);
-    }
-     public void excluir() throws SQLException, ClassNotFoundException {
-        FormularioDAO.excluir(this);
-    }
-
-    public Candidato getCandidato() throws ClassNotFoundException {
-        if ((codCandidato != 0) && (candidato == null)) {
-            candidato = Candidato.obterCandidato(codCandidato);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Formulario)) {
+            return false;
         }
-        return candidato;
+        Formulario other = (Formulario) object;
+        if ((this.codForm == null && other.codForm != null) || (this.codForm != null && !this.codForm.equals(other.codForm))) {
+            return false;
+        }
+        return true;
     }
 
-    public void setCandidato(Candidato candidato) {
-        this.candidato = candidato;
+    @Override
+    public String toString() {
+        return "modelo.Formulario[ codForm=" + codForm + " ]";
     }
-
-    public int getCodCandidato() {
-        return codCandidato;
-    }
-
-    public void setCodCandidato(int codCandidato) {
-        this.codCandidato = codCandidato;
-    }
-
-    
-    
     
 }

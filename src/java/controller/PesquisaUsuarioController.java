@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package controller;
 
-import dao.FuncionarioDAO;
+import dao.UsuarioDAO;
 import java.io.IOException;
+import static java.lang.System.out;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Fred
+ * @author Aluno
  */
-public class PesquisaParametroCursoController extends HttpServlet {
+public class PesquisaUsuarioController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,11 +33,15 @@ public class PesquisaParametroCursoController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.setAttribute("funcionarios", FuncionarioDAO.getInstance().obterFuncionarios());
-        RequestDispatcher view=
-                request.getRequestDispatcher("/parametroCurso.jsp");
-        view.forward(request, response);
+            throws ServletException, IOException, ClassNotFoundException {
+
+        try {
+            request.setAttribute("usuarios", UsuarioDAO.getInstance().obterUsuarios());
+            RequestDispatcher view = request.getRequestDispatcher("/pesquisaUsuario.jsp");
+            view.forward(request, response);
+        } finally {
+            out.close();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,7 +56,11 @@ public class PesquisaParametroCursoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PesquisaUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -62,7 +74,11 @@ public class PesquisaParametroCursoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PesquisaUsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

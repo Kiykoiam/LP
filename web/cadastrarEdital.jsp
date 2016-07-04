@@ -11,7 +11,7 @@
     </head>
     <body>		
         <h1> Cadastrar Edital ${operacao} </h1>
-        <form action="ManterEditalController?acao=confirmar${operacao}" method="post" name="frmManterCurso" onsubmit="return validarFormulario(this)">
+        <form action="ManterEditalController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterEdital" onsubmit="return validarFormulario(this)">
             <table >
 
                 <tr>
@@ -34,6 +34,25 @@
                         <td>Número</td>
                         <td><input type="text"name="txtNumero" value="${edital.numero}" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>> </td>
                 </tr>
+                <tr>
+                <td>Funcionario</td>
+                        <td>
+                            <select name="optFuncionario" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>>                             
+                            <c:forEach items="${funcionario}" var="funcionario">
+                                <option value="${funcionario.codFuncionario}" <c:if test="${edital.fUNCIONARIOcodFuncionario.codFuncionario == funcionario.codFuncionario}"> selected</c:if>>${funcionario.nome}</option>  
+                            </c:forEach>
+                        </select>
+                </tr>
+                <tr>
+                <td>Bolsa</td>
+                        <td>
+                            <select name="optBolsa" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>>                             
+                            <c:forEach items="${bolsa}" var="bolsa">
+                                <option value="${bolsa.codBolsa}" <c:if test="${edital.bOLSAcodBolsa.codBolsa == bolsa.codBolsa}"> selected</c:if>>${bolsa.nome}</option>  
+                            </c:forEach>
+                        </select>
+                </tr>
+                
                 <tr>
                     <td><input value="Finalizar Cadastro" type="submit" /></td>
                     <td><input value="Cancelar Cadastro" type="submit" /></td>

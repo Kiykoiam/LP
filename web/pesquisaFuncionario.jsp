@@ -25,12 +25,12 @@
             <tr>
                 <td><c:out value="${funcionario.codFuncionario}" /></td>
                 <td><c:out value="${funcionario.nome}" /></td>
-                <td><a href="ManterFuncionarioController?acao=prepararEditar&codFuncionario=<c:out value="${funcionario.codFuncionario}"/>">Editar</a></td>
-                <td><a href="ManterFuncionarioController?acao=prepararExcluir&codFuncionario=<c:out value="${funcionario.codFuncionario}"/>">Excluir</a></td>
+                <td><a href="ManterFuncionarioController?acao=prepararOperacao&operacao=Editar&codFuncionario=<c:out value="${funcionario.codFuncionario}"/>">Editar</a></td>
+                <td><a href="ManterFuncionarioController?acao=prepararOperacao&operacao=Excluir&codFuncionario=<c:out value="${funcionario.codFuncionario}"/>">Excluir</a></td>
             </tr>
         </c:forEach>
         </table>
-        <form action="ManterFuncionarioController?acao=prepararIncluir" method="post">
+        <form action="ManterFuncionarioController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
     </body>

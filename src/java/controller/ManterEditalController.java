@@ -1,142 +1,100 @@
 
 package controller;
 
+import dao.BolsaDAO;
+import dao.EditalDAO;
+import dao.FuncionarioDAO;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Bolsa;
 import modelo.Edital;
+import modelo.Funcionario;
 
 
 public class ManterEditalController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    private Edital edital;
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acao = request.getParameter("acao");
-        if (acao.equals("prepararIncluir")) {
-            prepararIncluir(request, response);
-        } else {
-            if (acao.equals("confirmarIncluir")) {
-                confirmarIncluir(request, response);
-            } else {
-                if (acao.equals("prepararEditar")) {
-                    prepararEditar(request, response);
-                } else {
-                    if (acao.equals("confirmarEditar")) {
-                        confirmarEditar(request, response);
-                    } else {
-                        if (acao.equals("prepararExcluir")) {
-                            prepararExcluir(request, response);
-                        } else {
-                            if (acao.equals("confirmarExcluir")) {
-                                confirmarExcluir(request, response);
-                            }
-                        }
-                    }
-                }
-            }
+        if (acao.equals("prepararOperacao")) {
+            prepararOperacao(request, response);
+        }
+        if (acao.equals("confirmarOperacao")) {
+            confirmarOperacao(request, response);
         }
     }
-    
-    public void prepararIncluir(HttpServletRequest request, HttpServletResponse response) {
+
+    public void prepararOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            request.setAttribute("operacao", "Incluir");
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarEdital.jsp");
-            view.forward(request, response);
-        } catch(ServletException ex) {
-        } catch(IOException ex) {            
+            String operacao = request.getParameter("operacao");
+            request.setAttribute("operacao", operacao);
+            request.setAttribute("funcionario", FuncionarioDAO.getInstance().obterFuncionarios());
+            request.setAttribute("bolsa", BolsaDAO.getInstance().obterBolsas());
            
+            if (!operacao.equals("Incluir")) {
+                int CodEdital = Integer.parseInt(request.getParameter("codEdital"));
+                edital = EditalDAO.getInstance().obterEdital(CodEdital);
+                request.setAttribute("edital", edital);
+            }
+            RequestDispatcher View = request.getRequestDispatcher("/cadastrarEdital.jsp");
+            View.forward(request, response);
+        } catch (ServletException e) {
+            throw e;
+        } catch (IOException e) {
+            throw new ServletException(e);
         }
     }
-     public void confirmarIncluir(HttpServletRequest request, HttpServletResponse response) {
-        int codEdital = Integer.parseInt(request.getParameter("txtCodEdital"));
-        String ano = request.getParameter("txtAnoEdital");
-         String descricao = request.getParameter("txtDescricao");
-         String categoria = request.getParameter("txtCategoria");
-        int numero = Integer.parseInt(request.getParameter("txtNumero"));
+
+    public void confirmarOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Edital edital = new Edital(codEdital, ano, descricao, categoria, numero);
-            edital.gravar();
+            String operacao = request.getParameter("operacao");
+            int codEdital = Integer.parseInt(request.getParameter("txtCodEdital"));
+            String anoEdital = request.getParameter("txtAnoEdital");
+            String descricao = request.getParameter("txtDescricao");
+            String categoria = request.getParameter("txtCategoria");
+            int numero = Integer.parseInt(request.getParameter("txtNumero"));
+            int funcionarioId = Integer.parseInt(request.getParameter("optFuncionario"));            
+            int bolsaId = Integer.parseInt(request.getParameter("optBolsa"));
+            
+            Funcionario nomeFuncionario = null;
+            Bolsa nomeBolsa = null;
+            if (funcionarioId != 0 && bolsaId != 0) {
+                nomeFuncionario = FuncionarioDAO.getInstance().obterFuncionario(funcionarioId);
+                nomeBolsa = BolsaDAO.getInstance().obterBolsa(bolsaId);
+            }    
+           
+            if (operacao.equals("Incluir")) {
+                edital = new Edital(codEdital);
+                edital.setAno(anoEdital);
+                edital.setDescricao(descricao);
+                edital.setCategoria(categoria);
+                edital.setNumero(numero);                
+                edital.setFUNCIONARIOcodFuncionario(nomeFuncionario);
+                edital.setBOLSAcodBolsa(nomeBolsa);
+               EditalDAO.getInstance().salvar(edital);
+            } else if (operacao.equals("Editar")) {
+                edital.setAno(anoEdital);
+                edital.setDescricao(descricao);
+                edital.setCategoria(categoria);
+                edital.setNumero(numero);                
+                edital.setFUNCIONARIOcodFuncionario(nomeFuncionario);
+                edital.setBOLSAcodBolsa(nomeBolsa);
+                EditalDAO.getInstance().editar(edital);
+            } else if (operacao.equals("Excluir")) {
+                EditalDAO.getInstance().excluir(edital);
+            }
             RequestDispatcher view = request.getRequestDispatcher("PesquisaEditalController");
             view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
-        }
-    }
-      public void prepararEditar(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Editar");            
-            int codEdital = Integer.parseInt(request.getParameter("codEdital"));
-            Edital edital = Edital.obterEdital(codEdital);
-            request.setAttribute("edital", edital);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarEdital.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-       public void confirmarEditar(HttpServletRequest request, HttpServletResponse response) {
-        int codEdital = Integer.parseInt(request.getParameter("txtCodEdital"));
-        String ano = request.getParameter("txtAnoEdital");
-         String descricao = request.getParameter("txtDescricao");
-         String categoria = request.getParameter("txtCategoria");
-        int numero = Integer.parseInt(request.getParameter("txtNumero"));
-        try {
-            Edital edital = new Edital(codEdital, ano, descricao, categoria, numero);
-            edital.alterar();
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaEditalController");
-            view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
-        }
-    }
-     
-     public void prepararExcluir(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Excluir");            
-            int codEdital = Integer.parseInt(request.getParameter("codEdital"));
-            Edital edital = Edital.obterEdital(codEdital);
-            request.setAttribute("edital", edital);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarEdital.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-     
-      public void confirmarExcluir(HttpServletRequest request, HttpServletResponse response) {
-        int codEdital = Integer.parseInt(request.getParameter("txtCodEdital"));
-        String ano = request.getParameter("txtAnoEdital");
-         String descricao = request.getParameter("txtDescricao");
-         String categoria = request.getParameter("txtCategoria");
-        int numero = Integer.parseInt(request.getParameter("txtNumero"));
-        try {
-            Edital edital = new Edital(codEdital, ano, descricao, categoria, numero);
-            edital.excluir();
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaEditalController");
-            view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
+        } catch (ServletException e) {
+            throw e;
+        } catch (IOException e) {
+            throw new ServletException(e);
         }
     }
 

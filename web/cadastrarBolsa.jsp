@@ -12,7 +12,7 @@
     <body>
 <h1> Cadastrar Bolsa  ${operacao}</h1>
 
-<form action="ManterBolsaController?acao=confirmar${operacao}" method="post" name="frmManterBolsa" onsubmit="return validarFormulario(this)">
+<form action="ManterBolsaController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterBolsa" onsubmit="return validarFormulario(this)">
     <table>
         <tr>
             <td>Código Bolsa</td>

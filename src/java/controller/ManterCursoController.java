@@ -1,7 +1,8 @@
 package controller;
 
+import dao.CursoDAO;
+import dao.FuncionarioDAO;
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,151 +13,75 @@ import modelo.Funcionario;
 
 public class ManterCursoController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private Curso curso;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acao = request.getParameter("acao");
-        if (acao.equals("prepararIncluir")) {
-            prepararIncluir(request, response);
-        } else {
-            if (acao.equals("confirmarIncluir")) {
-                confirmarIncluir(request, response);
-            } else {
-                if (acao.equals("prepararEditar")) {
-                    prepararEditar(request, response);
-                } else {
-                    if (acao.equals("confirmarEditar")) {
-                        confirmarEditar(request, response);
-                    } else {
-                        if (acao.equals("prepararExcluir")) {
-                            prepararExcluir(request, response);
-                        } else {
-                            if (acao.equals("confirmarExcluir")) {
-                                confirmarExcluir(request, response);
-                            }
-                        }
-                    }
-                }
-            }
+        if (acao.equals("prepararOperacao")) {
+            prepararOperacao(request, response);
+        }
+        if (acao.equals("confirmarOperacao")) {
+            confirmarOperacao(request, response);
         }
     }
 
-    public void prepararIncluir(HttpServletRequest request, HttpServletResponse response) {
+    public void prepararOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            request.setAttribute("operacao", "Incluir");
-            request.setAttribute("funcionario", Funcionario.obterFuncionarios());
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarCurso.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
+            String operacao = request.getParameter("operacao");
+            request.setAttribute("operacao", operacao);
+            request.setAttribute("funcionario", FuncionarioDAO.getInstance().obterFuncionarios());
+            if (!operacao.equals("Incluir")) {
+                int codCurso = Integer.parseInt(request.getParameter("codCurso"));
+                curso = CursoDAO.getInstance().obterCurso(codCurso);
+                request.setAttribute("curso", curso);
+            }
+            RequestDispatcher View = request.getRequestDispatcher("/cadastrarCurso.jsp");
+            View.forward(request, response);
+        } catch (ServletException e) {
+            throw e;
+        } catch (IOException e) {
+            throw new ServletException(e);
         }
     }
 
-    public void confirmarIncluir(HttpServletRequest request, HttpServletResponse response) {
-        int codCurso = Integer.parseInt(request.getParameter("txtCodCurso"));
-        String nome = request.getParameter("txtNomeCurso");
-        String cargaHoraria = request.getParameter("txtCargaHoraria");
-        String tipoCurso = request.getParameter("optTipoCurso");
-        String totalPeriodos = request.getParameter("txtTotalPeriodos");
-        int funcionario = Integer.parseInt(request.getParameter("optFuncionario"));
+    public void confirmarOperacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Funcionario func = null;
-            if (funcionario != 0) {
-                func = Funcionario.obterFuncionario(funcionario);
+            String operacao = request.getParameter("operacao");
+            int codCurso = Integer.parseInt(request.getParameter("txtCodCurso"));
+            String nomeCurso = request.getParameter("txtNomeCurso");
+            int totalPeriodos = Integer.parseInt(request.getParameter("txtTotalPeriodos"));
+             int cargaHoraria = Integer.parseInt(request.getParameter("txtCargaHoraria"));
+            String tipoCurso = request.getParameter("optTipoCurso");
+            int funcionarioId = Integer.parseInt(request.getParameter("optFuncionario"));
+            Funcionario nomeFuncionario = null;
+            if (funcionarioId != 0) {
+                nomeFuncionario = FuncionarioDAO.getInstance().obterFuncionario(funcionarioId);
             }
-            Curso curso = new Curso(codCurso, nome, cargaHoraria, tipoCurso, totalPeriodos, func);
-            curso.gravar();
+            if (operacao.equals("Incluir")) {
+                curso = new Curso(codCurso);
+                curso.setNome(nomeCurso);
+                curso.setTotalPeriodos(totalPeriodos);
+                curso.setCargaHoraria(cargaHoraria);
+                curso.setTipoCurso(tipoCurso);                
+                curso.setFuncionarioId(nomeFuncionario);
+               CursoDAO.getInstance().salvar(curso);
+            } else if (operacao.equals("Editar")) {
+                curso.setNome(nomeCurso);
+                curso.setTotalPeriodos(totalPeriodos);
+                curso.setCargaHoraria(cargaHoraria);
+                curso.setTipoCurso(tipoCurso);                
+                curso.setFuncionarioId(nomeFuncionario);
+                CursoDAO.getInstance().editar(curso);
+            } else if (operacao.equals("Excluir")) {
+                CursoDAO.getInstance().excluir(curso);
+            }
             RequestDispatcher view = request.getRequestDispatcher("PesquisaCursoController");
             view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
-        }
-    }
-    
-    public void prepararEditar(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Editar");
-            request.setAttribute("funcionario", Funcionario.obterFuncionarios());
-            int codCurso = Integer.parseInt(request.getParameter("codCurso"));
-            Curso curso = Curso.obterCurso(codCurso);
-            request.setAttribute("curso", curso);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarCurso.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-    
-    public void confirmarEditar(HttpServletRequest request, HttpServletResponse response) {
-        int codCurso = Integer.parseInt(request.getParameter("txtCodCurso"));
-        String nome = request.getParameter("txtNomeCurso");
-        String cargaHoraria = request.getParameter("txtCargaHoraria");
-        String tipoCurso = request.getParameter("optTipoCurso");
-        String totalPeriodos = request.getParameter("txtTotalPeriodos");
-        int funcionario = Integer.parseInt(request.getParameter("optFuncionario"));
-        try {
-            Funcionario func = null;
-            if (funcionario != 0) {
-                func = Funcionario.obterFuncionario(funcionario);
-            }
-            Curso curso = new Curso(codCurso, nome, cargaHoraria, tipoCurso, totalPeriodos, func);
-            curso.alterar();
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaCursoController");
-            view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
-        }
-    }
-    
-    public void prepararExcluir(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setAttribute("operacao", "Excluir");
-            request.setAttribute("funcionario", Funcionario.obterFuncionarios());
-            int codCurso = Integer.parseInt(request.getParameter("codCurso"));
-            Curso curso = Curso.obterCurso(codCurso);
-            request.setAttribute("curso", curso);            
-            RequestDispatcher view = request.getRequestDispatcher("/cadastrarCurso.jsp");
-            view.forward(request, response);
-        } catch (ServletException ex) {
-        } catch (IOException ex) {
-        } catch (ClassNotFoundException ex) {
-        }
-    }
-    
-    public void confirmarExcluir(HttpServletRequest request, HttpServletResponse response) {
-        int codCurso = Integer.parseInt(request.getParameter("txtCodCurso"));
-        String nome = request.getParameter("txtNomeCurso");
-        String cargaHoraria = request.getParameter("txtCargaHoraria");
-        String tipoCurso = request.getParameter("optTipoCurso");
-        String totalPeriodos = request.getParameter("txtTotalPeriodos");
-        int funcionario = Integer.parseInt(request.getParameter("optFuncionario"));
-        try {
-            Funcionario func = null;
-            if (funcionario != 0) {
-                func = Funcionario.obterFuncionario(funcionario);
-            }
-            Curso curso = new Curso(codCurso, nome, cargaHoraria, tipoCurso, totalPeriodos, func);
-            curso.excluir();
-            RequestDispatcher view = request.getRequestDispatcher("PesquisaCursoController");
-            view.forward(request, response);
-        } catch (IOException ex) {
-        } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-        } catch (ServletException ex) {
+        } catch (ServletException e) {
+            throw e;
+        } catch (IOException e) {
+            throw new ServletException(e);
         }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

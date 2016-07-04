@@ -21,6 +21,8 @@
         <a href="PesquisaEditalController"> Manter Edital</a> </br>
         <a href="PesquisaFuncionarioController"> Manter Funcionario</a></br>
         <a href="PesquisaFormularioController"> Manter Formulario</a></br>
+        <a href="PesquisaUsuarioController"> Manter Usuario</a></br>
+        <a href="PesquisaGrupoController"> Manter Grupo</a></br>
         <h3> Relatorios </h3>
         <a href="relatorioCurso"> Exibir Relatorio Curso</a></br>
         <a href="relatorioAlunoFuncionario"> Exibir Relatorio Aluno Funcionario</a></br>

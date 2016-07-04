@@ -1,59 +1,123 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package modelo;
 
-import dao.CandidatoDAO;
-import java.sql.SQLException;
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-public class Candidato {
-    private int codCandidato;
+/**
+ *
+ * @author Aluno
+ */
+@Entity
+@Table(name = "candidato")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Candidato.findAll", query = "SELECT c FROM Candidato c"),
+    @NamedQuery(name = "Candidato.findByCodCandidato", query = "SELECT c FROM Candidato c WHERE c.codCandidato = :codCandidato"),
+    @NamedQuery(name = "Candidato.findByNome", query = "SELECT c FROM Candidato c WHERE c.nome = :nome"),
+    @NamedQuery(name = "Candidato.findByTelefone", query = "SELECT c FROM Candidato c WHERE c.telefone = :telefone"),
+    @NamedQuery(name = "Candidato.findByRg", query = "SELECT c FROM Candidato c WHERE c.rg = :rg"),
+    @NamedQuery(name = "Candidato.findByCpf", query = "SELECT c FROM Candidato c WHERE c.cpf = :cpf"),
+    @NamedQuery(name = "Candidato.findByMatricula", query = "SELECT c FROM Candidato c WHERE c.matricula = :matricula"),
+    @NamedQuery(name = "Candidato.findBySexo", query = "SELECT c FROM Candidato c WHERE c.sexo = :sexo"),
+    @NamedQuery(name = "Candidato.findByRua", query = "SELECT c FROM Candidato c WHERE c.rua = :rua"),
+    @NamedQuery(name = "Candidato.findByNumero", query = "SELECT c FROM Candidato c WHERE c.numero = :numero"),
+    @NamedQuery(name = "Candidato.findByBairro", query = "SELECT c FROM Candidato c WHERE c.bairro = :bairro"),
+    @NamedQuery(name = "Candidato.findByCep", query = "SELECT c FROM Candidato c WHERE c.cep = :cep"),
+    @NamedQuery(name = "Candidato.findByComplemento", query = "SELECT c FROM Candidato c WHERE c.complemento = :complemento"),
+    @NamedQuery(name = "Candidato.findByUf", query = "SELECT c FROM Candidato c WHERE c.uf = :uf"),
+    @NamedQuery(name = "Candidato.findByCidade", query = "SELECT c FROM Candidato c WHERE c.cidade = :cidade"),
+    @NamedQuery(name = "Candidato.findByEmail", query = "SELECT c FROM Candidato c WHERE c.email = :email"),
+    @NamedQuery(name = "Candidato.findByAnoDeIngresso", query = "SELECT c FROM Candidato c WHERE c.anoDeIngresso = :anoDeIngresso"),
+    @NamedQuery(name = "Candidato.findByCelular", query = "SELECT c FROM Candidato c WHERE c.celular = :celular"),
+    @NamedQuery(name = "Candidato.findByPrevisaoTermino", query = "SELECT c FROM Candidato c WHERE c.previsaoTermino = :previsaoTermino")})
+public class Candidato implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codCandidato")
+    private Integer codCandidato;
+    @Size(max = 45)
+    @Column(name = "nome")
     private String nome;
-    private String telefone;
+    @Column(name = "telefone")
+    private Integer telefone;
+    @Size(max = 45)
+    @Column(name = "rg")
     private String rg;
-    private String cpf;
-    private int matricula;
+    @Column(name = "cpf")
+    private Integer cpf;
+    @Column(name = "matricula")
+    private Integer matricula;
+    @Size(max = 45)
+    @Column(name = "sexo")
     private String sexo;
+    @Size(max = 45)
+    @Column(name = "rua")
     private String rua;
-    private String numero;
+    @Column(name = "numero")
+    private Integer numero;
+    @Size(max = 45)
+    @Column(name = "bairro")
     private String bairro;
-    private String cep;
+    @Column(name = "cep")
+    private Integer cep;
+    @Size(max = 45)
+    @Column(name = "complemento")
     private String complemento;
+    @Size(max = 45)
+    @Column(name = "uf")
     private String uf;
+    @Size(max = 45)
+    @Column(name = "cidade")
     private String cidade;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 45)
+    @Column(name = "email")
     private String email;
+    @Size(max = 45)
+    @Column(name = "anoDeIngresso")
     private String anoDeIngresso;
-    private int celular;    
+    @Column(name = "celular")
+    private Integer celular;
+    @Size(max = 45)
+    @Column(name = "previsaoTermino")
     private String previsaoTermino;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cANDIDATOcodCandidato")
+    private List<Formulario> formularioList;
 
-    public Candidato(int codCandidato, String nome, String telefone, String rg, String cpf, int matricula, String sexo, String rua, String numero, String bairro, String cep, String complemento, String uf, String cidade, String email, String anoDeIngresso, int celular, String previsaoTermino) {
+    public Candidato() {
+    }
+
+    public Candidato(Integer codCandidato) {
         this.codCandidato = codCandidato;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.matricula = matricula;
-        this.sexo = sexo;
-        this.rua = rua;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.complemento = complemento;
-        this.uf = uf;
-        this.cidade = cidade;
-        this.email = email;
-        this.anoDeIngresso = anoDeIngresso;
-        this.celular = celular;
-        this.previsaoTermino = previsaoTermino;
-    }
-       
-    public static List<Candidato> obterCandidatos() throws ClassNotFoundException {
-        return CandidatoDAO.obterCandidatos();
     }
 
-    public int getCodCandidato() {
+    public Integer getCodCandidato() {
         return codCandidato;
     }
 
-    public void setCodCandidato(int codCandidato) {
+    public void setCodCandidato(Integer codCandidato) {
         this.codCandidato = codCandidato;
     }
 
@@ -65,11 +129,11 @@ public class Candidato {
         this.nome = nome;
     }
 
-    public String getTelefone() {
+    public Integer getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public void setTelefone(Integer telefone) {
         this.telefone = telefone;
     }
 
@@ -81,19 +145,19 @@ public class Candidato {
         this.rg = rg;
     }
 
-    public String getCpf() {
+    public Integer getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(Integer cpf) {
         this.cpf = cpf;
     }
 
-    public int getMatricula() {
+    public Integer getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(Integer matricula) {
         this.matricula = matricula;
     }
 
@@ -113,11 +177,11 @@ public class Candidato {
         this.rua = rua;
     }
 
-    public String getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -129,11 +193,11 @@ public class Candidato {
         this.bairro = bairro;
     }
 
-    public String getCep() {
+    public Integer getCep() {
         return cep;
     }
 
-    public void setCep(String cep) {
+    public void setCep(Integer cep) {
         this.cep = cep;
     }
 
@@ -177,11 +241,11 @@ public class Candidato {
         this.anoDeIngresso = anoDeIngresso;
     }
 
-    public int getCelular() {
+    public Integer getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(Integer celular) {
         this.celular = celular;
     }
 
@@ -192,16 +256,39 @@ public class Candidato {
     public void setPrevisaoTermino(String previsaoTermino) {
         this.previsaoTermino = previsaoTermino;
     }
-    public static Candidato obterCandidato(int codCandidato) throws ClassNotFoundException {
-        return CandidatoDAO.obterCandidato(codCandidato);
+
+    @XmlTransient
+    public List<Formulario> getFormularioList() {
+        return formularioList;
     }
-    public void gravar() throws SQLException, ClassNotFoundException {
-        CandidatoDAO.gravar(this);
+
+    public void setFormularioList(List<Formulario> formularioList) {
+        this.formularioList = formularioList;
     }
-     public void alterar() throws SQLException, ClassNotFoundException {
-        CandidatoDAO.alterar(this);
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codCandidato != null ? codCandidato.hashCode() : 0);
+        return hash;
     }
-     public void excluir() throws SQLException, ClassNotFoundException {
-        CandidatoDAO.excluir(this);
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Candidato)) {
+            return false;
+        }
+        Candidato other = (Candidato) object;
+        if ((this.codCandidato == null && other.codCandidato != null) || (this.codCandidato != null && !this.codCandidato.equals(other.codCandidato))) {
+            return false;
+        }
+        return true;
     }
+
+    @Override
+    public String toString() {
+        return "modelo.Candidato[ codCandidato=" + codCandidato + " ]";
+    }
+    
 }

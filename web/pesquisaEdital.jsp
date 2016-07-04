@@ -25,12 +25,12 @@
             <tr>
                 <td><c:out value="${edital.codEdital}" /></td>
                 <td><c:out value="${edital.ano}" /></td>
-                <td><a href="ManterEditalController?acao=prepararEditar&codEdital=<c:out value="${edital.codEdital}"/>">Editar</a></td>
-                <td><a href="ManterEditalController?acao=prepararExcluir&codEdital=<c:out value="${edital.codEdital}"/>">Excluir</a></td>
+                <td><a href="ManterEditalController?acao=prepararOperacao&operacao=Editar&codEdital=<c:out value="${edital.codEdital}"/>">Editar</a></td>
+                <td><a href="ManterEditalController?acao=prepararOperacao&operacao=Excluir&codEdital=<c:out value="${edital.codEdital}"/>">Excluir</a></td>
             </tr>
         </c:forEach>
         </table>
-        <form action="ManterEditalController?acao=prepararIncluir" method="post">
+        <form action="ManterEditalController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
     </body>

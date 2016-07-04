@@ -24,13 +24,13 @@
             <c:forEach items="${formularios}" var="formulario">
             <tr>
                 <td><c:out value="${formulario.codForm}" /></td>
-                <td><c:out value="${formulario.candidato.nome}" /></td>
-                <td><a href="ManterFormularioController?acao=prepararEditar&codForm=<c:out value="${formulario.codForm}"/>">Editar</a></td>
-                <td><a href="ManterFormularioController?acao=prepararExcluir&codForm=<c:out value="${formulario.codForm}"/>">Excluir</a></td>
+                <td><c:out value="${formulario.cANDIDATOcodCandidato.nome}" /></td>
+                <td><a href="ManterFormularioController?acao=prepararOperacao&operacao=Editar&codForm=<c:out value="${formulario.codForm}"/>">Editar</a></td>
+                <td><a href="ManterFormularioController?acao=prepararOperacao&operacao=Excluir&codForm=<c:out value="${formulario.codForm}"/>">Excluir</a></td>
             </tr>
         </c:forEach>
         </table>
-        <form action="ManterFormularioController?acao=prepararIncluir" method="post">
+        <form action="ManterFormularioController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
     </body>

@@ -12,7 +12,7 @@
     </head>
     <body>		
         <h1> Cadastrar Funcionario ${operacao} </h1>
-        <form action="ManterFuncionarioController?acao=confirmar${operacao}" method="post" name="frmManterFuncionario" onsubmit="return validarFormulario(this)">
+        <form action="ManterFuncionarioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterFuncionario" onsubmit="return validarFormulario(this)">
             <table >
 
                 <tr>
@@ -43,8 +43,8 @@
                     <tr>
                         <td>Sexo</td>
                         <td> <select name="optSexo" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>>
-                            <option value="Masculino" <c:if test="${funcionario.sexo == 'Técnico'}"> selected</c:if>>Masculino</option>
-                            <option value="Feminino" <c:if test="${funcionario.sexo == 'Integrado'}"> selected</c:if>>Feminino</option>
+                            <option value="Masculino" <c:if test="${funcionario.sexo == 'Masculino'}"> selected</c:if>>Masculino</option>
+                            <option value="Feminino" <c:if test="${funcionario.sexo == 'Feminino'}"> selected</c:if>>Feminino</option>
                             </select></td>
                     </tr>
                     <tr>

@@ -1,45 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package modelo;
 
-import dao.EditalDAO;
-import java.sql.SQLException;
-import java.util.List;
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class Edital {
-    private int codEdital;
+/**
+ *
+ * @author Aluno
+ */
+@Entity
+@Table(name = "edital")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Edital.findAll", query = "SELECT e FROM Edital e"),
+    @NamedQuery(name = "Edital.findByCodEdital", query = "SELECT e FROM Edital e WHERE e.codEdital = :codEdital"),
+    @NamedQuery(name = "Edital.findByAno", query = "SELECT e FROM Edital e WHERE e.ano = :ano"),
+    @NamedQuery(name = "Edital.findByDescricao", query = "SELECT e FROM Edital e WHERE e.descricao = :descricao"),
+    @NamedQuery(name = "Edital.findByCategoria", query = "SELECT e FROM Edital e WHERE e.categoria = :categoria"),
+    @NamedQuery(name = "Edital.findByNumero", query = "SELECT e FROM Edital e WHERE e.numero = :numero")})
+public class Edital implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codEdital")
+    private Integer codEdital;
+    @Size(max = 40)
+    @Column(name = "ano")
     private String ano;
+    @Size(max = 45)
+    @Column(name = "descricao")
     private String descricao;
+    @Size(max = 45)
+    @Column(name = "categoria")
     private String categoria;
-    private int  numero;
-    private int codFuncionario;
-    private int codBolsa;
-    private Funcionario funcionario;
-    private Bolsa bolsa;
+    @Column(name = "numero")
+    private Integer numero;
+    @JoinColumn(name = "BOLSA_codBolsa", referencedColumnName = "codBolsa")
+    @ManyToOne
+    private Bolsa bOLSAcodBolsa;
+    @JoinColumn(name = "FUNCIONARIO_codFuncionario", referencedColumnName = "codFuncionario")
+    @ManyToOne
+    private Funcionario fUNCIONARIOcodFuncionario;
 
-    public Bolsa getBolsa() {
-        return bolsa;
-    }
-
-    public void setBolsa(Bolsa bolsa) {
-        this.bolsa = bolsa;
-    }
-    
-
-    public Edital(int codEdital, String ano, String descricao, String categoria, int numero) {
-        this.codEdital = codEdital;
-        this.ano = ano;
-        this.descricao = descricao;
-        this.categoria = categoria;
-        this.numero = numero;
-    }
-    
     public Edital() {
-        super();
+    }
+
+    public Edital(Integer codEdital) {
+        this.codEdital = codEdital;
+    }
+
+    public Integer getCodEdital() {
+        return codEdital;
+    }
+
+    public void setCodEdital(Integer codEdital) {
+        this.codEdital = codEdital;
     }
 
     public String getAno() {
         return ano;
     }
-    
+
     public void setAno(String ano) {
         this.ano = ano;
     }
@@ -60,68 +99,53 @@ public class Edital {
         this.categoria = categoria;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
-    }    
-
-    public int getCodEdital() {
-        return codEdital;
     }
 
-    public void setCodEdital(int codEdital) {
-        this.codEdital = codEdital;
+    public Bolsa getBOLSAcodBolsa() {
+        return bOLSAcodBolsa;
+    }
+
+    public void setBOLSAcodBolsa(Bolsa bOLSAcodBolsa) {
+        this.bOLSAcodBolsa = bOLSAcodBolsa;
+    }
+
+    public Funcionario getFUNCIONARIOcodFuncionario() {
+        return fUNCIONARIOcodFuncionario;
+    }
+
+    public void setFUNCIONARIOcodFuncionario(Funcionario fUNCIONARIOcodFuncionario) {
+        this.fUNCIONARIOcodFuncionario = fUNCIONARIOcodFuncionario;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codEdital != null ? codEdital.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Edital)) {
+            return false;
+        }
+        Edital other = (Edital) object;
+        if ((this.codEdital == null && other.codEdital != null) || (this.codEdital != null && !this.codEdital.equals(other.codEdital))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.Edital[ codEdital=" + codEdital + " ]";
     }
     
-     public static List<Edital> obterEditais() throws ClassNotFoundException {
-        return EditalDAO.obterEditais();
-    }   
-
-    public int getCodFuncionario() {
-        return codFuncionario;
-    }
-
-    public void setCodFuncionario(int codFuncionario) {
-        this.codFuncionario = codFuncionario;
-    }
-
-    public int getCodBolsa() {
-        return codBolsa;
-    }
-
-    public void setCodBolsa(int codBolsa) {
-        this.codBolsa = codBolsa;
-    }
-    
-    public void setChaveFunc(int codFuncionario) {
-        this.codFuncionario = codFuncionario;
-    }
-
-    public void setChaveBolsa(int codBolsa) {
-        this.codBolsa = codBolsa;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-    public static Edital obterEdital(int codEdital) throws ClassNotFoundException {
-        return EditalDAO.obterEdital(codEdital);
-    }
-    
-    public void gravar() throws SQLException, ClassNotFoundException {
-        EditalDAO.gravar(this);
-    }
-     public void alterar() throws SQLException, ClassNotFoundException {
-        EditalDAO.alterar(this);
-    }
-     public void excluir() throws SQLException, ClassNotFoundException {
-        EditalDAO.excluir(this);
-    }
 }

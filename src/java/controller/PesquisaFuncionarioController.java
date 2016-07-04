@@ -6,6 +6,7 @@
 
 package controller;
 
+import dao.FuncionarioDAO;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.logging.Level;
@@ -15,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Funcionario;
 
 /**
  *
@@ -36,7 +36,7 @@ public class PesquisaFuncionarioController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
         
         try {
-            request.setAttribute("funcionarios", Funcionario.obterFuncionarios());
+            request.setAttribute("funcionarios", FuncionarioDAO.getInstance().obterFuncionarios());
             RequestDispatcher view = request.getRequestDispatcher("/pesquisaFuncionario.jsp");
             view.forward(request,response);
         } finally {

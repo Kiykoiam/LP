@@ -11,7 +11,7 @@
     </head>
     <body>		
         <h1> Cadastrar Formulario ${operacao} </h1>
-        <form action="ManterFormularioController?acao=confirmar${operacao}" method="post" name="frmManterFormulario" onsubmit="return validarFormulario(this)">
+        <form action="ManterFormularioController?acao=confirmarOperacao&operacao=${operacao}" method="post" name="frmManterFormulario" onsubmit="return validarFormulario(this)">
             <table >
 
                 <tr>
@@ -240,7 +240,7 @@
                         <td>
                             <select name="optCandidato" <c:if test="${operacao == 'Excluir'}"> readonly</c:if>>                             
                             <c:forEach items="${candidato}" var="candidato">
-                                <option value="${candidato.codCandidato}" <c:if test="${formulatio.candidato.codCandidato == candidato.codCandidato}"> selected</c:if>>${candidato.nome}</option>  
+                                <option value="${candidato.codCandidato}" <c:if test="${formulario.cANDIDATOcodCandidato.codCandidato == candidato.codCandidato}"> selected</c:if>>${candidato.nome}</option>  
                             </c:forEach>
                         </select>
                     </td>

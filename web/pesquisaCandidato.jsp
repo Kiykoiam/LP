@@ -25,12 +25,12 @@
             <tr>
                 <td><c:out value="${candidato.codCandidato}" /></td>
                 <td><c:out value="${candidato.nome}" /></td>
-                <td><a href="ManterCandidatoController?acao=prepararEditar&codCandidato=<c:out value="${candidato.codCandidato}"/>">Editar</a></td>
-                <td><a href="ManterCandidatoController?acao=prepararExcluir&codCandidato=<c:out value="${candidato.codCandidato}"/>">Excluir</a></td>
+                <td><a href="ManterCandidatoController?acao=prepararOperacao&operacao=Editar&codCandidato=<c:out value="${candidato.codCandidato}"/>">Editar</a></td>
+                <td><a href="ManterCandidatoController?acao=prepararOperacao&operacao=Excluir&codCandidato=<c:out value="${candidato.codCandidato}"/>">Excluir</a></td>
             </tr>
         </c:forEach>
         </table>
-        <form action="ManterCandidatoController?acao=prepararIncluir" method="post">
+        <form action="ManterCandidatoController?acao=prepararOperacao&operacao=Incluir" method="post">
             <input type="submit" name="btnIncluir" value="Incluir">
         </form>
     </body>

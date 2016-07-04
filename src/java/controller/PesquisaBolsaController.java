@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package controller;
 
+import dao.BolsaDAO;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.logging.Level;
@@ -15,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Bolsa;
 
 /**
  *
@@ -36,7 +31,7 @@ public class PesquisaBolsaController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
         
         try {
-            request.setAttribute("bolsas", Bolsa.obterBolsas());
+           request.setAttribute("bolsas", BolsaDAO.getInstance().obterBolsas());
             RequestDispatcher view = request.getRequestDispatcher("/pesquisaBolsa.jsp");
             view.forward(request,response);
         } finally {
